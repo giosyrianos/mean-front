@@ -1,0 +1,18 @@
+mat-card {
+  width: 70%;
+  margin: auto;
+  background-color: #eee;
+
+}
+
+mat-form-field {
+  width: 100%;
+
+  textarea {
+    // width: 70%;
+  }
+  button {
+    width: 23%!important;
+    color: red;
+  }
+}
