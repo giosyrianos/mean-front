@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'mean-app';
+  postList = [];
+
+  getPost(post) {
+    console.log(post);
+    this.postList.push(post);
+  }
 }
