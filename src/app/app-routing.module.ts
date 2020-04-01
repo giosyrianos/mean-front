@@ -8,7 +8,9 @@ const routes: Routes = [
   // { path: 'property', loadChildren: () => import('./modules/property/property.module').then(m => m.PropertyModule) },
 
   {path: '', component: PostListComponent},
-  {path: 'create', component: PostCreateComponent}
+  { path: 'create', component: PostCreateComponent },
+  {path: 'edit/:postId', component: PostCreateComponent}
+
 ];
 
 @NgModule({

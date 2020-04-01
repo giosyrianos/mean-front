@@ -1,12 +1,12 @@
 <mat-card>
   <form
     #postForm="ngForm"
-    (submit)="onAddPost(postForm)">
+    (submit)="onSavePost(postForm)">
   <mat-form-field>
     <input
       matInput
       rows="4"
-      ngModel
+      [ngModel]="post?.title"
       name="title"
       placeholder="Post Title"
       required
@@ -19,7 +19,7 @@
     <textarea
       matInput
       rows="6"
-      ngModel
+      [ngModel]="post?.content"
       required
       placeholder="Post Content"
       name="content"
