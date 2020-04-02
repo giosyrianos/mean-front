@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Post } from '../post.model';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { PostService } from '../post.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
@@ -17,7 +17,8 @@ export class PostCreateComponent implements OnInit {
   private mode = 'create';
   private postId: string;
   public post: Post;
-    isLoading = false;
+  isLoading = false;
+  form: FormGroup;
 
   constructor(
     public postService: PostService,
@@ -25,6 +26,14 @@ export class PostCreateComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.form = new FormGroup({
+      title: new FormControl(null, {
+        validators: [Validators.required, Validators.minLength(3)]
+      }),
+      content: new FormControl(null, {
+        validators: [Validators.required]
+      })
+    });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('postId')) {
         this.mode = 'edit';
@@ -37,6 +46,10 @@ export class PostCreateComponent implements OnInit {
             title: postData.title,
             content: postData.content
           };
+          this.form.setValue({
+            title: this.post.title,
+            content: this.post.content
+          })
         });
       } else {
         this.mode = 'create';
@@ -45,16 +58,16 @@ export class PostCreateComponent implements OnInit {
     });
   }
 
-  onSavePost(form: NgForm) {
-    if (form.invalid) {
+  onSavePost() {
+    if (this.form.invalid) {
       return;
     }
     this.isLoading = true;
     if (this.mode === 'create') {
-      this.postService.addPost(form.value.title, form.value.content);
-      form.resetForm();
+      this.postService.addPost(this.form.value.title, this.form.value.content);
+      this.form.reset();
     } else {
-      this.postService.updatePost(this.postId, form.value.title, form.value.content);
+      this.postService.updatePost(this.postId, this.form.value.title, this.form.value.content);
     }
   }
 
