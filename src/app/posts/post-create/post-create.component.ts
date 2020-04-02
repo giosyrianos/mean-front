@@ -19,6 +19,7 @@ export class PostCreateComponent implements OnInit {
   public post: Post;
   isLoading = false;
   form: FormGroup;
+  imgPreview: string;
 
   constructor(
     public postService: PostService,
@@ -27,15 +28,20 @@ export class PostCreateComponent implements OnInit {
 
   ngOnInit() {
     this.form = new FormGroup({
+    // Adding form controls here
       title: new FormControl(null, {
         validators: [Validators.required, Validators.minLength(3)]
       }),
       content: new FormControl(null, {
         validators: [Validators.required]
+      }),
+      img: new FormControl(null, {
+        validators: [Validators.required]
       })
     });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('postId')) {
+        // Pre-populate form if i am in Editing Mode
         this.mode = 'edit';
         this.postId = paramMap.get('postId');
         this.isLoading = true;
@@ -56,6 +62,17 @@ export class PostCreateComponent implements OnInit {
         this.postId = null;
       }
     });
+  }
+
+  onFileImported(event: Event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.form.patchValue({ img: file });
+    this.form.get('img').updateValueAndValidity();
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imgPreview = reader.result as string;
+    };
+    reader.readAsDataURL(file);
   }
 
   onSavePost() {
