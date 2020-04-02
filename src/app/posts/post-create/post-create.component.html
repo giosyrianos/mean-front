@@ -20,7 +20,9 @@
     <input type="file" #filePicker (change)="onFileImported($event)">
   </div>
 
-  <div class="img-preview" *ngIf="imgPreview !== '' && imgPreview">
+  <div
+    class="img-preview"
+    *ngIf="imgPreview !== '' && imgPreview && form.get('img').valid">
     <img [src]="imgPreview" [alt]="form.value.title">
   </div>
 
