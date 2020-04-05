@@ -27,7 +27,8 @@ export class PostService {
             return {
               title: post.title,
               content: post.content,
-              id: post._id
+              id: post._id,
+              imgPath: post.imgPath
             };
           });
         })
@@ -63,12 +64,13 @@ export class PostService {
     // Give to the property the same name the post function tries to find (line:31@ posts.js)
     postData.append('image', image, title);
 
-    this.http.post<{ message: string, postId: string }>('http://localhost:3000/api/posts', postData)
+    this.http.post<{ message: string, post: Post }>('http://localhost:3000/api/posts', postData)
       .subscribe((res) => {
         const post: Post = {
-          id: res.postId,
+          id: res.post.id,
           title,
-          content
+          content,
+          imgPath: res.post.imgPath
         };
         this.posts.push(post);
         this.postsListUpdated.next([...this.posts]);
@@ -76,8 +78,8 @@ export class PostService {
       });
   }
 
-  updatePost(id: string, title: string, content: string) {
-    const post: Post = { id, title, content };
+  updatePost(id: string, title: string, content: string, ) {
+    const post: Post = { id, title, content, imgPath: null };
     this.http.put(`http://localhost:3000/api/posts/${id}`, post)
       .subscribe(res => {
         console.log(res);
