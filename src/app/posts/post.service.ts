@@ -51,15 +51,25 @@ export class PostService {
     }>(`http://localhost:3000/api/posts/${id}`);
   }
 
-  addPost(title: string, content: string) {
-    const post: Post = {
-      title,
-      content
-    };
-    this.http.post<{ message: string, postId: string }>('http://localhost:3000/api/posts', post)
+  addPost(title: string, content: string, image: File) {
+    // const post: Post = {
+    //   title,
+    //   content
+    // };
+    const postData = new FormData();
+    postData.append('title', title);
+    postData.append('content', content);
+
+    // Give to the property the same name the post function tries to find (line:31@ posts.js)
+    postData.append('image', image, title);
+
+    this.http.post<{ message: string, postId: string }>('http://localhost:3000/api/posts', postData)
       .subscribe((res) => {
-        const postId = res.postId;
-        post.id = postId;
+        const post: Post = {
+          id: res.postId,
+          title,
+          content
+        };
         this.posts.push(post);
         this.postsListUpdated.next([...this.posts]);
         this.router.navigate(['/']);
