@@ -2,5 +2,5 @@ export  interface Post {
   title: string;
   content: string;
   id?: string;
-  imgPath?: string;
+  imgPath: string;
 }
