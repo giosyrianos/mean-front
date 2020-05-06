@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(formData: NgForm) {
-    console.log(formData)
+    console.log(formData);
   }
 
 }
