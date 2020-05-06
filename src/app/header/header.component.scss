@@ -12,3 +12,13 @@ a {
 .spacer {
   flex: 1 1 auto;
 }
+
+ul {
+  width: 20%;
+  display: flex;
+
+  li {
+    margin: 0 4%;
+    font-size: 16px;
+  }
+}
