@@ -3,7 +3,7 @@
   <form
     #loginForm="ngForm"
     *ngIf="!isLoading"
-    (submit)="login(loginForm)">
+    (submit)="onLogin(loginForm)">
   <mat-form-field>
     <input
       matInput
