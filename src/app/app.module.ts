@@ -5,6 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatInputModule,
+  MatSelectModule,
   MatCardModule,
   MatButtonModule,
   MatToolbarModule,
@@ -42,6 +43,7 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     MatCardModule,
     MatButtonModule,
     MatToolbarModule,
+    MatSelectModule,
     MatExpansionModule,
     MatProgressSpinnerModule,
     MatPaginatorModule,
