@@ -42,6 +42,21 @@
     <mat-error *ngIf="passwordInput.invalid">Please enter valid password</mat-error>
   </mat-form-field>
 
+  <mat-form-field>
+    <mat-label>Select Role</mat-label>
+    <mat-select
+      required
+      matInput
+      name="role"
+      type="text"
+      ngModel
+      #roleInput="ngModel"
+    >
+      <mat-option value="client">Client</mat-option>
+      <mat-option value="dev">Developer</mat-option>
+    </mat-select>
+  </mat-form-field>
+
     <button
       mat-raised-button
       color="primary"

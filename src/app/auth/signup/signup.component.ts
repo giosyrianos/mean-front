@@ -22,7 +22,7 @@ export class SignupComponent implements OnInit {
     if (formData.invalid) {
       return;
     }
-    this.authService.createUser(formData.value.email, formData.value.password);
+    this.authService.createUser(formData.value.email, formData.value.password, formData.value.role);
   }
 
 }

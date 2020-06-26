@@ -12,14 +12,16 @@ export class AuthService {
     return this.token;
   }
 
-  createUser(email: string, password: string) {
+  createUser(email: string, password: string, role: string) {
     const authData: AuthData = {
       email,
-      password
+      password,
+      role
     };
     this.http.post('http://localhost:3000/api/user/signup', authData)
       .subscribe(response => {
         console.log(response);
+        // redirect here to my posts
       }) ;
   }
 
