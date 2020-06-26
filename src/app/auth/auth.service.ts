@@ -35,6 +35,10 @@ export class AuthService {
         console.log(response);
         const token = response.token;
         this.token = token;
-      });
+      },
+        error => {
+        console.log(error.message);
+       }
+      );
   }
 }
