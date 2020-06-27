@@ -58,6 +58,21 @@
     </mat-select>
   </mat-form-field>
 
+  <mat-form-field>
+    <mat-label>Select Role</mat-label>
+    <mat-select
+      required
+      matInput
+      name="role"
+      type="text"
+      ngModel
+      #roleInput="ngModel"
+    >
+      <mat-option value="client">Client</mat-option>
+      <mat-option value="dev">Developer</mat-option>
+    </mat-select>
+  </mat-form-field>
+
     <button
       *ngIf="!isLoading"
       mat-raised-button
