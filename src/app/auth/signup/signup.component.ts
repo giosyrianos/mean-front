@@ -18,6 +18,7 @@ export class SignupComponent implements OnInit {
   }
 
   signUp(formData: NgForm) {
+    this.isLoading = true;
     console.log('from Angular:', formData.value);
     if (formData.invalid) {
       return;

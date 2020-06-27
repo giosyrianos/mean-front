@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() { }
 
   onLogin(formData: NgForm) {
+    this.isLoading = true;
     console.log(formData);
     if (formData.invalid) {
       return
