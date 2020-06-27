@@ -31,6 +31,7 @@ export class PostService {
               content: post.content,
               id: post._id,
               imgPath: post.imgPath,
+              owner: post.owner
             };
           }),
             totalPosts: postData.total
@@ -56,7 +57,8 @@ export class PostService {
       _id: string;
       title: string;
       content: string;
-      imgPath: string
+      imgPath: string;
+      owner: string;
     }>(`http://localhost:3000/api/posts/${id}`);
   }
 
@@ -93,13 +95,15 @@ export class PostService {
       postData = new FormData();
       postData.append('title', title);
       postData.append('content', content);
+      // postData.append('owner',);
       postData.append('image', image, title);
     } else {
       postData = {
         id,
         title,
         content,
-        imgPath: image
+        imgPath: image,
+        owner: null
       };
     }
     this.http

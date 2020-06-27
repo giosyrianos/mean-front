@@ -3,4 +3,5 @@ export  interface Post {
   content: string;
   id?: string;
   imgPath: string;
+  owner: string;
 }
