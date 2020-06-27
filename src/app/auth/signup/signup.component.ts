@@ -25,12 +25,13 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   signUp(formData: NgForm) {
-    this.isLoading = true;
-    console.log('from Angular:', formData.value);
     if (formData.invalid) {
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 3000);
       return;
     }
-    this.authService.createUser(formData.value.email, formData.value.password, formData.value.role)
+    this.authService.createUser(formData.value.email, formData.value.password, formData.value.role);
 
   }
 
