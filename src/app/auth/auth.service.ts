@@ -42,7 +42,14 @@ export class AuthService {
       .subscribe(response => {
         console.log(response);
         // redirect here to my posts
-      }) ;
+        this.router.navigate(['/']);
+      },
+        error => {
+          console.log(error);
+          this.authStatusListener.next(false);
+          this.router.navigate(['/sign-up']);
+      }
+      );
   }
 
   login(email: string, password: string) {
