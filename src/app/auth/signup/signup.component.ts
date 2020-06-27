@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Subscription } from 'rxjs';
@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit, OnDestroy {
   isLoading = false;
   private authStatusSub: Subscription;
 
@@ -30,7 +30,12 @@ export class SignupComponent implements OnInit {
     if (formData.invalid) {
       return;
     }
-    this.authService.createUser(formData.value.email, formData.value.password, formData.value.role);
+    this.authService.createUser(formData.value.email, formData.value.password, formData.value.role)
+
+  }
+
+  ngOnDestroy() {
+    this.authStatusSub.unsubscribe();
   }
 
 }

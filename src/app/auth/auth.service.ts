@@ -48,13 +48,9 @@ export class AuthService {
         console.log(response);
         // redirect here to my posts
         this.router.navigate(['/']);
-      },
-        error => {
-          console.log(error);
+      }, error => {
           this.authStatusListener.next(false);
-          this.router.navigate(['/sign-up']);
-      }
-      );
+      });
   }
 
   login(email: string, password: string) {
@@ -79,11 +75,9 @@ export class AuthService {
           this.saveAuthData(token, expirationDate, this.userId);
           this.router.navigate(['/']);
         }
-      },
-        error => {
-        console.log(error.message);
-       }
-      );
+      }, error => {
+          this.authStatusListener.next(false);
+      });
   }
 
   logout() {
