@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Post } from './posts/post.model';
 import { AuthService } from './auth/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,8 @@ import { AuthService } from './auth/auth.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit{
+  authListenerSubs: Subscription;
+  userIsAuthenticated = false;
   title = 'mean-app';
   postList: Post[] = [];
   showFiller = false;
@@ -17,6 +20,11 @@ export class AppComponent implements OnInit{
 
   ngOnInit() {
     this.authService.autoAuthUser();
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.authListenerSubs = this.authService.getAuthStatusListener()
+      .subscribe(isAuthenticated => {
+        this.userIsAuthenticated = isAuthenticated;
+      });
   }
 
   le() {
