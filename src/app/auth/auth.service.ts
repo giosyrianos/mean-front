@@ -47,7 +47,7 @@ export class AuthService {
       .subscribe(response => {
         console.log(response);
         // redirect here to my posts
-        this.router.navigate(['/']);
+        this.router.navigate(['/login']);
       }, error => {
           this.authStatusListener.next(false);
       });
@@ -74,7 +74,9 @@ export class AuthService {
           console.log(expirationDate);
           this.saveAuthData(token, expirationDate, this.userId);
           if (response.userType === 'dev') {
-            this.router.navigate([`/profile/devs/${this.userId}`]);
+            this.router.navigate([`/profile/dev/${this.userId}`]);
+          } else {
+            this.router.navigate([`/profile/client/${this.userId}`]);
           }
         }
       }, error => {

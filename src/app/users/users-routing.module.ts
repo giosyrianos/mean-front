@@ -12,7 +12,7 @@ const routes: Routes = [
     component: ClientComponent
   },
   {
-    path: 'devs/:id',
+    path: 'dev/:id',
     component: DevsComponent
   }
 ];
