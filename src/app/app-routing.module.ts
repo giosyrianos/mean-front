@@ -13,7 +13,12 @@ const routes: Routes = [
   { path: 'create', component: PostCreateComponent, canActivate: [AuthGuard] },
   { path: 'edit/:postId', component: PostCreateComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent},
-  { path: 'sign-up', component: SignupComponent}
+  { path: 'sign-up', component: SignupComponent },
+  {
+    path: 'profile',
+    loadChildren: () => import('./users/users.module').then( m => m.UsersModule)
+  }
+  // {path: '*', component: PostListComponent}
 
 ];
 
