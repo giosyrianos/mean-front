@@ -31,7 +31,11 @@ export class SignupComponent implements OnInit, OnDestroy {
       }, 3000);
       return;
     }
-    this.authService.createUser(formData.value.email, formData.value.password, formData.value.role);
+    this.authService.createUser(
+      formData.value.email,
+      formData.value.password,
+      formData.value.role
+    );
 
   }
 
