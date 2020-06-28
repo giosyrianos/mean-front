@@ -37,11 +37,11 @@ export class AuthService {
     return this.authStatusListener.asObservable();
    }
 
-  createUser(email: string, password: string, role: string) {
+  createUser(email: string, password: string, userType: string) {
     const authData: AuthData = {
       email,
       password,
-      role
+      userType
     };
     this.http.post('http://localhost:3000/api/user/signup', authData)
       .subscribe(response => {
@@ -58,7 +58,7 @@ export class AuthService {
       email,
       password
     };
-    this.http.post<{ token: string, expiresIn: number, userId: string }>('http://localhost:3000/api/user/login', authData)
+    this.http.post<{ token: string, expiresIn: number, userId: string, userType: string }>('http://localhost:3000/api/user/login', authData)
       .subscribe(response => {
         console.log(response);
         const token = response.token;
@@ -73,7 +73,9 @@ export class AuthService {
           const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
           console.log(expirationDate);
           this.saveAuthData(token, expirationDate, this.userId);
-          this.router.navigate(['/']);
+          if (response.userType === 'dev') {
+            this.router.navigate([`/profile/devs/${this.userId}`]);
+          }
         }
       }, error => {
           this.authStatusListener.next(false);
