@@ -5,10 +5,12 @@ import {
   MatSelectModule,
   MatCardModule,
   MatButtonModule,
+  MatIconModule,
   MatToolbarModule,
   MatExpansionModule,
   MatProgressSpinnerModule,
   MatPaginatorModule,
+  MatSidenavModule,
   MatDialogModule
 } from '@angular/material';
 
@@ -16,10 +18,12 @@ import {
 
 @NgModule({
   exports: [
+    MatSidenavModule,
     CommonModule,
     MatInputModule,
     MatCardModule,
     MatButtonModule,
+    MatIconModule,
     MatToolbarModule,
     MatSelectModule,
     MatExpansionModule,

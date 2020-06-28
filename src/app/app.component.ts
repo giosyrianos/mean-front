@@ -10,13 +10,17 @@ import { AuthService } from './auth/auth.service';
 export class AppComponent implements OnInit{
   title = 'mean-app';
   postList: Post[] = [];
-
+  showFiller = false;
   constructor(
     private authService: AuthService
   ) { }
 
   ngOnInit() {
     this.authService.autoAuthUser();
+  }
+
+  le() {
+    console.log('works')
   }
 
   getPost(post: Post) {

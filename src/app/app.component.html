@@ -1,4 +1,21 @@
-  <app-header></app-header>
-  <main>
-   <router-outlet></router-outlet>
-  </main>
+  <app-header (menuToggle)="drawer.toggle()"></app-header>
+  <mat-drawer-container>
+    <mat-drawer #drawer class="sidenav" mode="side">
+      <button mat-raised-button routerLink="/create" routerLinkActive="mat-accent">New Post</button>
+      <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
+      <button (click)="showFiller = !showFiller" mat-raised-button>
+        Toggle extra text
+      </button>
+    </mat-drawer>
+
+    <div class="example-sidenav-content">
+      <button type="button" mat-button (click)="drawer.toggle()">
+        Toggle sidenav
+      </button>
+    </div>
+
+    <main>
+      <router-outlet></router-outlet>
+     </main>
+  </mat-drawer-container>
+

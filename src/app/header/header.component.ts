@@ -1,8 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 
 import { AuthService } from '../auth/auth.service';
 import { Subscription } from 'rxjs';
-
 
 @Component({
   selector: 'app-header',
@@ -13,6 +12,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   authListenerSubs: Subscription;
   userIsAuthenticated = false;
 
+  @Output() menuToggle = new EventEmitter();
+
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
@@ -21,6 +22,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
       });
+  }
+
+  getMenu() {
+    this.menuToggle.emit();
   }
 
   onLogout() {
