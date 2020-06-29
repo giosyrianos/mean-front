@@ -4,4 +4,5 @@ export  interface Post {
   id?: string;
   imgPath: string;
   owner: string;
+  bids?: any[];
 }
