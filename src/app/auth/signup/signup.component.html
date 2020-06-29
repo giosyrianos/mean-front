@@ -93,23 +93,16 @@
       <form
         [formGroup]="secondFormGroup"
         >
-        <ng-template matStepLabel>Job Info</ng-template>
+        <ng-template matStepLabel>Personal Info</ng-template>
         <mat-form-field>
           <mat-label>Name</mat-label>
           <input
-            matInput formControlName="fullname" placeholder="First Name - Last Name">
+            matInput formControlName="firstname" placeholder="First Name - Last Name">
         </mat-form-field>
-        <!-- <mat-form-field> -->
-          <mat-label>Profile Image</mat-label>
-          <input type="file" #filePicker formControlName="image" (change)="onFileImported($event)">
-          <button mat-button type="button" (click)="filePicker.click()">
-            <mat-icon matBadge="15" matBadgeColor="warn">person</mat-icon>
-          </button>
-        <!-- </mat-form-field> -->
-        <mat-form-field *ngIf="userType === 'Developer'">
-          <mat-label>Skills</mat-label>
-          <input matInput formControlName="skills" placeholder="First Name - Last Name"
-                 required>
+        <mat-form-field>
+          <mat-label>Last Name</mat-label>
+          <input
+            matInput formControlName="lastname" placeholder="First Name - Last Name">
         </mat-form-field>
         <div>
           <button mat-button matStepperPrevious>Back</button>
@@ -124,6 +117,7 @@
         mat-raised-button
         color="primary"
         type="submit"
+        (click)="submitForm()"
     >Sign Up</button>
       <div>
         <button mat-button matStepperPrevious>Back</button>
