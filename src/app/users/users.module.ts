@@ -4,12 +4,14 @@ import { ClientComponent } from './client/client.component';
 import { DevsComponent } from './devs/devs.component';
 
 import { UsersRoutingModule } from './users-routing.module';
+import { AngularMaterialModule } from '../angular-material.module';
 
 @NgModule({
   declarations: [ClientComponent, DevsComponent],
   imports: [
     CommonModule,
-    UsersRoutingModule
+    UsersRoutingModule,
+    AngularMaterialModule
   ]
 })
 export class UsersModule { }

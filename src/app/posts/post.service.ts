@@ -24,6 +24,7 @@ export class PostService {
       .get<{ message: string, posts: any, total: number }>('http://localhost:3000/api/posts' + queryParams)
       .pipe(
         map((postData) => {
+          console.log(postData)
           return {
             posts: postData.posts.map(post => {
             return {

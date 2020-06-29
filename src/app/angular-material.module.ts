@@ -11,9 +11,12 @@ import {
   MatProgressSpinnerModule,
   MatPaginatorModule,
   MatSidenavModule,
-  MatDialogModule
+  MatDialogModule,
+  MatTabsModule,
+  MatFormFieldModule,
+  MatTableModule,
+  MatChipsModule
 } from '@angular/material';
-
 
 
 @NgModule({
@@ -29,7 +32,11 @@ import {
     MatExpansionModule,
     MatProgressSpinnerModule,
     MatPaginatorModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTabsModule,
+    MatFormFieldModule,
+    MatTableModule,
+    MatChipsModule
   ]
 })
 export class AngularMaterialModule { }
