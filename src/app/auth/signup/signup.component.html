@@ -1,6 +1,6 @@
 <mat-card>
   <mat-spinner *ngIf="isLoading"></mat-spinner>
-  <form
+  <!-- <form
     #signUpForm="ngForm"
     *ngIf="!isLoading"
     (submit)="signUp(signUpForm)">
@@ -17,18 +17,6 @@
     >
     <mat-error *ngIf="emailInput.invalid">Please enter a valid email</mat-error>
   </mat-form-field>
-
-  <!-- <div>
-    <button mat-stroked-button type="button" (click)="filePicker.click()">Pick Image</button>
-    <input type="file" #filePicker (change)="onFileImported($event)">
-  </div>
-
-  <div
-    class="img-preview"
-    *ngIf="imgPreview !== '' && imgPreview && form.get('image').valid">
-    <img [src]="imgPreview" [alt]="form.value.title">
-  </div> -->
-
   <mat-form-field>
     <input
       matInput
@@ -50,11 +38,9 @@
       matInput
       name="userType"
       type="text"
-      ngModel
-      #roleInput="ngModel"
     >
-      <mat-option value="client">Client</mat-option>
-      <mat-option value="dev">Developer</mat-option>
+      <mat-option value="Client">Client</mat-option>
+      <mat-option value="Developer">Developer</mat-option>
     </mat-select>
   </mat-form-field>
     <button
@@ -63,5 +49,97 @@
       color="primary"
       type="submit"
     >Sign Up</button>
-  </form>
+  </form> -->
+  <button mat-raised-button (click)="isEditable = !isEditable">
+    {{!isEditable ? 'Enable edit mode' : 'Disable edit mode'}}
+  </button>
+
+  <mat-horizontal-stepper linear #stepper>
+    <mat-step [stepControl]="firstFormGroup" [editable]="isEditable">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Basic Info</ng-template>
+        <mat-form-field>
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username" placeholder="username" required>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" name="email" type="email" email placeholder="Email" required>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" placeholder="Password" type="password" name="password" required>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Select Role</mat-label>
+          <mat-select
+            required
+            matInput
+            name="userType"
+            type="text"
+            (selectionChange)="getSelection()"
+            [formControl]="selectedRole"
+          >
+            <mat-option value="Client">Client</mat-option>
+            <mat-option value="Developer">Developer</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div>
+          <button mat-raised-button  matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup" [editable]="isEditable">
+      <form
+        [formGroup]="secondFormGroup"
+        >
+        <ng-template matStepLabel>Job Info</ng-template>
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input
+            matInput formControlName="fullname" placeholder="First Name - Last Name">
+        </mat-form-field>
+        <!-- <mat-form-field> -->
+          <mat-label>Profile Image</mat-label>
+          <input type="file" #filePicker formControlName="image" (change)="onFileImported($event)">
+          <button mat-button type="button" (click)="filePicker.click()">
+            <mat-icon matBadge="15" matBadgeColor="warn">person</mat-icon>
+          </button>
+        <!-- </mat-form-field> -->
+        <mat-form-field *ngIf="userType === 'Developer'">
+          <mat-label>Skills</mat-label>
+          <input matInput formControlName="skills" placeholder="First Name - Last Name"
+                 required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <button
+        *ngIf="!isLoading"
+        mat-raised-button
+        color="primary"
+        type="submit"
+    >Sign Up</button>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+
 </mat-card>
+  <!-- <div>
+    <button mat-stroked-button type="button" (click)="filePicker.click()">Pick Image</button>
+    <input type="file" #filePicker (change)="onFileImported($event)">
+  </div>
+
+  <div
+    class="img-preview"
+    *ngIf="imgPreview !== '' && imgPreview && form.get('image').valid">
+    <img [src]="imgPreview" [alt]="form.value.title">
+  </div> -->
