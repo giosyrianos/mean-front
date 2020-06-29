@@ -85,8 +85,10 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   submitForm() {
     this.firstFormGroup.patchValue({ userType: this.userType });
-    console.log('first:', this.firstFormGroup);
-    console.log('second:', this.secondFormGroup);
+      // console.log('first:', this.firstFormGroup.value);
+      // console.log('second:', this.secondFormGroup.value);
+    const newUserData = { ...this.firstFormGroup.value, ...this.secondFormGroup.value };
+    console.log(newUserData);
   }
 
   ngOnDestroy() {
