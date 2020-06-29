@@ -11,11 +11,73 @@
   width: 100%;
 
   img {
-    width: 100%;
     box-shadow: 1px 1px 5px rgba(0, 0, 0 , 0.5);
+    max-height: 500px;
   }
 }
 
 mat-accordion{
   padding: 1% 5%;
+}
+
+mat-expansion-panel-header {
+  font-size: 20px;
+}
+
+p {
+  margin-top: 0;
+  font-size: 1.1rem;
+  font-size: 17px;
+}
+
+.rest-info {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+
+  .col-1, .col-2 {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+
+    div {
+      margin: 5px 0;
+      font-size: 1.1rem;
+      font-weight: 900;
+    }
+  }
+
+  label {
+    font-weight: 400;
+    font-size: 1rem;
+    margin-right: 5px;
+  }
+}
+
+.offers {
+  margin-top: 10px;
+
+  mat-card-content {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .bid-container, .actions {
+    margin: 0 16px;
+  }
+
+  label {
+    font-weight: 400;
+    font-size: 1rem;
+    margin-right: 5px;
+  }
+
+  span{
+    font-size: 1.1rem;
+    font-weight: 900;
+  }
+  .mat-raised-button.mat-primary{
+    margin-right: 10px;
+    background-color: green;
+  }
 }

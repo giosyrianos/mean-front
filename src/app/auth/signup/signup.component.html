@@ -35,14 +35,30 @@
       ngModel
       name="password"
       type="password"
-      placeholder="Please enter a password"
+      placeholder="Password"
       #passwordInput="ngModel"
+      minlength="6"
       required
      />
-    <mat-error *ngIf="passwordInput.invalid">Please enter valid password</mat-error>
+    <mat-error *ngIf="passwordInput.invalid">Valid password 6 characters minimum</mat-error>
   </mat-form-field>
 
+  <mat-form-field>
+    <mat-label>Select Role</mat-label>
+    <mat-select
+      required
+      matInput
+      name="userType"
+      type="text"
+      ngModel
+      #roleInput="ngModel"
+    >
+      <mat-option value="client">Client</mat-option>
+      <mat-option value="dev">Developer</mat-option>
+    </mat-select>
+  </mat-form-field>
     <button
+      *ngIf="!isLoading"
       mat-raised-button
       color="primary"
       type="submit"

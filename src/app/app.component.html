@@ -1,4 +1,18 @@
-  <app-header></app-header>
-  <main>
-   <router-outlet></router-outlet>
-  </main>
+  <app-header (menuToggle)="drawer.toggle()"></app-header>
+  <mat-drawer-container>
+    <mat-drawer #drawer class="sidenav" mode="side">
+      <button
+        *ngIf="userIsAuthenticated" mat-raised-button routerLink="/create" routerLinkActive="mat-accent">New Post
+      </button>
+      <button
+        *ngIf="!userIsAuthenticated"
+        routerLink="/login" mat-raised-button
+        routerLinkActive="mat-accent"
+      >Login</button>
+    </mat-drawer>
+
+    <main>
+      <router-outlet></router-outlet>
+     </main>
+  </mat-drawer-container>
+

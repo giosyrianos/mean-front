@@ -5,38 +5,48 @@ import { PostService } from '../post.service';
 import { Subscription } from 'rxjs';
 import { PageEvent } from '@angular/material';
 
+import { AuthService } from '../../auth/auth.service';
+
 @Component({
   selector: 'app-post-list',
   templateUrl: './post-list.component.html',
   styleUrls: ['./post-list.component.scss']
 })
-export class PostListComponent implements OnInit {
+export class PostListComponent implements OnInit, OnDestroy {
 
   public posts: Post[] = [];
   private postsSub: Subscription;
+  private authStatusSup: Subscription;
+  public userIsAuthenticated = false;
+  public userId: string;
   isLoading = false;
 
   totalPosts = 0;
-
   currentPage = 1;
-
   postsPerPage = 2;
-
   pageSizeOptions = [1, 3, 4, 10];
 
   constructor(
-    public postService: PostService
+    public postService: PostService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
     // this.posts = this.postService.getPosts();
     this.isLoading = true;
+    this.userId = this.authService.getUserId();
     this.postService.getPosts(this.postsPerPage, this.currentPage);
     this.postsSub = this.postService.updatePostsListener()
       .subscribe((postData: {posts: Post[], postCount: number}) => {
         this.isLoading = false;
         this.posts = postData.posts;
         this.totalPosts = postData.postCount;
+      });
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.authStatusSup = this.authService.getAuthStatusListener()
+      .subscribe(isAuthenticated => {
+        this.userIsAuthenticated = isAuthenticated;
+        this.userId = this.authService.getUserId();
       });
   }
 
@@ -58,6 +68,7 @@ export class PostListComponent implements OnInit {
     // Called once, before the instance is destroyed.
     // Add 'implements OnDestroy' to the class.
     this.postsSub.unsubscribe();
+    this.authStatusSup.unsubscribe();
   }
 
 }

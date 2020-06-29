@@ -2,4 +2,31 @@ main {
   margin: 1rem;
   width: 80%;
   margin: auto;
+  height: 100vh;
+}
+
+.example-container {
+  width: 500px;
+  height: 800px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.example-sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidenav {
+  padding: 20px;
+  min-width: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  button {
+    width: 100%;
+    margin-bottom: 1rem;
+  };
 }
