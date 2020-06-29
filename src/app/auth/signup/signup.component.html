@@ -50,7 +50,7 @@
       type="submit"
     >Sign Up</button>
   </form> -->
-  <button mat-raised-button (click)="isEditable = !isEditable">
+  <button color="primary" mat-stroked-button (click)="isEditable = !isEditable">
     {{!isEditable ? 'Enable edit mode' : 'Disable edit mode'}}
   </button>
 
@@ -105,7 +105,7 @@
             matInput formControlName="lastname" placeholder="First Name - Last Name">
         </mat-form-field>
         <div>
-          <button mat-stroked-button type="button" (click)="filePicker.click()">Pick Image</button>
+          <button mat-fab color="primary" type="button" (click)="filePicker.click()"><mat-icon>person</mat-icon></button>
           <input type="file" #filePicker (change)="onFileImported($event)">
         </div>
 
@@ -116,7 +116,7 @@
       </div>
 
         <div>
-          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperPrevious color="primary">Back</button>
           <button mat-button matStepperNext>Next</button>
         </div>
       </form>
@@ -130,7 +130,7 @@
         type="submit"
         (click)="submitForm()"
     >Sign Up</button>
-      <div>
+      <div >
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button (click)="stepper.reset()">Reset</button>
       </div>
