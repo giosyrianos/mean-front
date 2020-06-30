@@ -34,7 +34,7 @@ export class AuthService {
   }
 
   getUserType() {
-    return this.userType;
+    // return this.userType;
   }
 
   getAuthStatusListener() {
@@ -59,9 +59,9 @@ export class AuthService {
 
   createUser2(newUser: any) {
     const userData = new FormData();
-    userData.append('newUser', newUser);
+    userData.append('newUser', JSON.stringify(newUser));
     userData.append('image', newUser.image);
-    this.http.post('http://localhost:3000/api/user/signup', {userData, newUser})
+    this.http.post('http://localhost:3000/api/user/signup',userData)
       .subscribe(response => {
         console.log(response);
         // redirect here to my posts
