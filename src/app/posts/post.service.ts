@@ -70,6 +70,12 @@ export class PostService {
     const postData = new FormData();
     postData.append('title', title);
     postData.append('content', content);
+    
+    // ######
+    // Find id of current client !!!!!
+    postData.append('ownerId', "5ef6fe4972f8c853dc7727f2")
+    // ######
+
 
     // Give to the property the same name the post function tries to find (line:31@ posts.js)
     postData.append('image', image, title);
