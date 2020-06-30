@@ -57,7 +57,7 @@ export class AuthService {
     const userData = new FormData();
     userData.append('newUser', newUser);
     userData.append('image', newUser.image);
-    this.http.post('http://localhost:3000/api/user/signup', userData)
+    this.http.post('http://localhost:3000/api/user/signup', userData, newUser)
       .subscribe(response => {
         console.log(response);
         // redirect here to my posts
