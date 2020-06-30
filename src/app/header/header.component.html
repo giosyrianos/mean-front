@@ -19,7 +19,7 @@
     <li *ngIf="userIsAuthenticated">
       <button (click)="onLogout()" mat-button routerLinkActive="mat-accent">Logout</button>
     </li>
-    <li *ngIf="userIsAuthenticated">
+    <li class="avatar"[routerLink]="'/profile/' + userId"  *ngIf="userIsAuthenticated">
       <mat-icon style="font-size: 35px;" matBadge="15" matBadgeColor="warn">person</mat-icon>
     </li>
   </ul>

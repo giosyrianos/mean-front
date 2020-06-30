@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 export class HeaderComponent implements OnInit, OnDestroy {
   authListenerSubs: Subscription;
   userIsAuthenticated = false;
+  userId: string
 
   @Output() menuToggle = new EventEmitter();
 
@@ -22,6 +23,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
       });
+    this.userId = this.authService.getUserId();
   }
 
   getMenu() {

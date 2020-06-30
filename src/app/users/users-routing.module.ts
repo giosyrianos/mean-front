@@ -8,13 +8,13 @@ import { PostListComponent } from '../posts/post-list/post-list.component';
 
 const routes: Routes = [
   {
-    path: 'client/:id',
+    path: ':id',
     component: ClientComponent
-  },
-  {
-    path: 'dev/:id',
-    component: DevsComponent
   }
+  // {
+  //   path: 'dev/:id',
+  //   component: DevsComponent
+  // }
 ];
 
 @NgModule({

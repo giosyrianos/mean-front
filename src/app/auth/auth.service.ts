@@ -93,11 +93,7 @@ export class AuthService {
           const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
           console.log(expirationDate);
           this.saveAuthData(token, expirationDate, this.userId, this.userType);
-          if (response.userType === 'Developer') {
-            this.router.navigate([`/profile/dev/${this.userId}`]);
-          } else {
-            this.router.navigate([`/profile/client/${this.userId}`]);
-          }
+          this.router.navigate([`/profile/${this.userId}`]);
         }
       }, error => {
           this.authStatusListener.next(false);
