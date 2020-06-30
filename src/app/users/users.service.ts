@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http/';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
+
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -12,6 +13,9 @@ export class UserService{
   private devs: any[] = [];
   private devsListUpdated = new Subject<{ devs: any[] }>();
   userId: string
+  user: any;
+
+
 
   constructor(
     private http: HttpClient,

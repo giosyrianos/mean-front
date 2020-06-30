@@ -1,0 +1,44 @@
+.card-container {
+  padding: 10px 5px;
+  margin-top: 10px;
+}
+
+mat-card-header {
+  display: block;
+
+  .img-container {
+    float: left;
+    img {
+      border-radius: 50%;
+      height: 180px;
+    }
+  }
+
+  mat-card-title {
+    height: 200px;
+    font-size: 30px;
+    text-align: center;
+  }
+
+  mat-card-subtitle {
+    font-size: 25px;
+  }
+
+  label {
+    color: #000;
+    font-weight: 900;
+  }
+}
+
+mat-card-actions {
+  text-align: center;
+}
+
+mat-card-content {
+  margin: 0 16px;
+
+  h4 {
+    font-size: 24px;
+    font-weight: 900;
+  }
+}

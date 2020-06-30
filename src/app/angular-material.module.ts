@@ -12,7 +12,7 @@ import {
   MatPaginatorModule,
   MatSidenavModule,
   MatDialogModule,
-  MatStepperModule
+  MatStepperModule,
 } from '@angular/material';
 
 
@@ -31,7 +31,8 @@ import {
     MatProgressSpinnerModule,
     MatPaginatorModule,
     MatDialogModule,
-    MatStepperModule
+    MatStepperModule,
+    MatCardModule
   ]
 })
 export class AngularMaterialModule { }

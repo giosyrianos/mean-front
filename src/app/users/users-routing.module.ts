@@ -8,7 +8,7 @@ import { PostListComponent } from '../posts/post-list/post-list.component';
 
 const routes: Routes = [
   {
-    path: ':id',
+    path: ':userid',
     component: ClientComponent
   }
   // {

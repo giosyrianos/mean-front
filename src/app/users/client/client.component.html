@@ -1,1 +1,29 @@
-<p>client profile!</p>
+<div class="card-container">
+
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <mat-card *ngIf="!isLoading" class="example-card">
+
+    <mat-card-header>
+      <mat-card-title>
+        <div class="img-container">
+          <img [src]="user.subUserFields.imgPath" width="180" alt="">
+        </div>
+        {{ user.userFields.username }}
+        <mat-card-actions>
+          <a [routerLink]="['/edit', user._id]" color="primary" mat-raised-button>EDIT</a>
+          <button color="warn" mat-raised-button (click)="onDelete(user._id)">DELETE</button>
+        </mat-card-actions>
+      </mat-card-title>
+      <mat-card-subtitle>
+        <label>Full Name: </label>
+        {{ user.subUserFields.name }} {{ user.subUserFields.surname }}
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <h4>Projects:</h4>
+
+    </mat-card-content>
+
+  </mat-card>
+</div>
