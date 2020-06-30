@@ -53,7 +53,7 @@ export class AuthService {
       });
   }
 
-  createUser2(newUser: UserData) {
+  createUser2(newUser: any) {
 
     this.http.post('http://localhost:3000/api/user/signup', newUser)
       .subscribe(response => {
