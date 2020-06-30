@@ -27,11 +27,11 @@ export class PostService {
           return {
             posts: postData.posts.map(post => {
             return {
-              title: post.title,
-              content: post.content,
+              title: post.basicFields.title,
+              content: post.basicFields.description,
               id: post._id,
-              imgPath: post.imgPath,
-              owner: post.owner
+              imgPath: post.basicFields.imgPath,
+              owner: post.basicFields.ownerId
             };
           }),
             totalPosts: postData.total
