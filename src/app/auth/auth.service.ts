@@ -53,6 +53,18 @@ export class AuthService {
       });
   }
 
+  createUser2(newUser: UserData) {
+
+    this.http.post('http://localhost:3000/api/user/signup', newUser)
+      .subscribe(response => {
+        console.log(response);
+        // redirect here to my posts
+        this.router.navigate(['/login']);
+      }, error => {
+          this.authStatusListener.next(false);
+      });
+  }
+
   login(email: string, password: string) {
     const authData: AuthData = {
       email,

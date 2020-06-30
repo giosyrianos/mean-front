@@ -88,7 +88,8 @@ export class SignupComponent implements OnInit, OnDestroy {
       // console.log('first:', this.firstFormGroup.value);
       // console.log('second:', this.secondFormGroup.value);
     const newUserData = { ...this.firstFormGroup.value, ...this.secondFormGroup.value };
-    console.log(newUserData);
+    console.log('from Angular:', newUserData);
+    this.authService.createUser2(newUserData);
   }
 
   ngOnDestroy() {
