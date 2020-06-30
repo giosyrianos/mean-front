@@ -5,9 +5,10 @@ import { DevsComponent } from './devs/devs.component';
 import { AngularMaterialModule } from '../angular-material.module';
 
 import { UsersRoutingModule } from './users-routing.module';
+import { EditUserComponent } from './edit-user/edit-user.component';
 
 @NgModule({
-  declarations: [ClientComponent, DevsComponent],
+  declarations: [ClientComponent, DevsComponent, EditUserComponent],
   imports: [
     CommonModule,
     UsersRoutingModule,

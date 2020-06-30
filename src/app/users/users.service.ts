@@ -12,7 +12,7 @@ import { map } from 'rxjs/operators';
 export class UserService{
   private devs: any[] = [];
   private devsListUpdated = new Subject<{ devs: any[] }>();
-  userId: string
+  userId: string;
   user: any;
 
 
