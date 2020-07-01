@@ -27,9 +27,8 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   totalPosts = 0;
   currentPage = 1;
-  postsPerPage = 2;
-  pageSizeOptions = [1, 3, 4, 10];
-
+  postsPerPage = 8;
+  pageSizeOptions = [1, 3, 8, 10];
   constructor(
     public postService: PostService,
     private authService: AuthService
