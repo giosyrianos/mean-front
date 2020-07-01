@@ -69,7 +69,7 @@ export class ClientComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.usrService.getSingleUser(userID).subscribe(userData => {
       this.isLoading = false;
-      console.log(this.userId, this.profileID );
+      // console.log(this.userId, this.profileID );
       this.user = userData;
 
     });
@@ -110,8 +110,9 @@ export class ClientComponent implements OnInit, OnDestroy {
       this.usrService.getDevPosts(userID)
         .pipe(
           map((postData: any) => {
+            console.log(postData)
             return {
-              posts: postData.map(post => {
+              posts: postData.data.map(post => {
                 return {
                   title: post.basicFields.title,
                   content: post.basicFields.description,

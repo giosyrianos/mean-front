@@ -35,6 +35,7 @@ export class UserService{
   }
 
   getDevPosts(id: string) {
+    console.log(id)
     return this.http.get(`http://localhost:3000/api/user/posts/${id}`);
   }
 
