@@ -31,7 +31,10 @@ export class PostService {
               content: post.basicFields.description,
               id: post._id,
               imgPath: post.basicFields.imgPath,
-              owner: post.basicFields.ownerId
+              owner: post.basicFields.ownerId,
+              category: post.basicFields.category,
+              subCategory: post.basicFields.subCategory,
+              bids: post.bids
             };
           }),
             totalPosts: postData.total
@@ -59,34 +62,34 @@ export class PostService {
       content: string;
       imgPath: string;
       owner: string;
+      category: string;
+      subCategory: string;
     }>(`http://localhost:3000/api/posts/${id}`);
   }
 
-  addPost(title: string, content: string, image: File) {
+  addPost(title: string, content: string, image: File, category: string, subCategory: string, id:string) {
     // const post: Post = {
     //   title,
     //   content
     // };
+    console.log("Edw 3")
     const postData = new FormData();
     postData.append('title', title);
     postData.append('content', content);
-    
-    // ######
-    // Find id of current client !!!!!
-    postData.append('ownerId', "5ef6fe4972f8c853dc7727f2")
-    // ######
-
+    postData.append('ownerId', id);
+    postData.append('category', category);
+    postData.append('subCategory', subCategory);
 
     // Give to the property the same name the post function tries to find (line:31@ posts.js)
     postData.append('image', image, title);
-
+    console.log(postData)
     this.http.post<{ message: string, post: Post }>('http://localhost:3000/api/posts', postData)
       .subscribe((res) => {
         this.router.navigate(['/']);
       });
   }
 
-  updatePost(id: string, title: string, content: string, image: File | string) {
+  updatePost(id: string, title: string, content: string, image: File | string, category: string, subCategory) {
     let postData: Post | FormData;
     if (typeof image === 'object') {
       postData = new FormData();
@@ -94,13 +97,17 @@ export class PostService {
       postData.append('title', title);
       postData.append('content', content);
       postData.append('image', image, title);
+      postData.append('category', category);
+      postData.append('subCategory', subCategory);
     } else {
       postData = {
         id,
         title,
         content,
         imgPath: image,
-        owner: null
+        owner: null,
+        category,
+        subCategory
       };
     }
     this.http

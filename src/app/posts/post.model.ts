@@ -5,4 +5,6 @@ export  interface Post {
   imgPath: string;
   owner: string;
   bids?: any[];
+  category: string;
+  subCategory: string;
 }

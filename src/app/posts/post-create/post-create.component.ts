@@ -6,6 +6,7 @@ import { PostService } from '../post.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
 import { mimeType } from './mime-type.validator';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-post-create',
@@ -19,12 +20,22 @@ export class PostCreateComponent implements OnInit {
   private mode = 'create';
   private postId: string;
   public post: Post;
+  private ownerId: string;
   isLoading = false;
   form: FormGroup;
   imgPreview: string;
+  category = ''
+  subCategory = ''
+
+  categories = ["Web Design","Web app","Application","Game"]
+  subCategories = ["Design","Develop", "CEO", "Performance"]
+
+  selectedCategory = new FormControl();
+  selectedSubCategory = new FormControl();
 
   constructor(
     public postService: PostService,
+    public authService: AuthService,
     public route: ActivatedRoute,
   ) { }
 
@@ -55,12 +66,16 @@ export class PostCreateComponent implements OnInit {
             title: postData.title,
             content: postData.content,
             imgPath: postData.imgPath,
-            owner: postData.owner
+            owner: postData.owner,
+            category: postData.category,
+            subCategory: postData.subCategory
           };
           this.form.setValue({
             title: this.post.title,
             content: this.post.content,
-            image: this.post.imgPath
+            image: this.post.imgPath,
+            category: this.post.category,
+            subCategory: this.post.subCategory
           });
         });
       } else {
@@ -69,6 +84,15 @@ export class PostCreateComponent implements OnInit {
       }
     });
   }
+
+  getCategorySelection() {
+    this.category = this.selectedCategory.value
+  }
+
+  getSubCategorySelection() {
+    this.subCategory = this.selectedSubCategory.value
+  }
+
 
   onFileImported(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
@@ -87,10 +111,12 @@ export class PostCreateComponent implements OnInit {
     }
     this.isLoading = true;
     if (this.mode === 'create') {
-      this.postService.addPost(this.form.value.title, this.form.value.content, this.form.value.image);
+      this.ownerId = this.authService.getUserId()
+      
+      this.postService.addPost(this.form.value.title, this.form.value.content, this.form.value.image, this.selectedCategory.value, this.selectedSubCategory.value, this.ownerId);
       this.form.reset();
     } else {
-      this.postService.updatePost(this.postId, this.form.value.title, this.form.value.content, this.form.value.image);
+      this.postService.updatePost(this.postId, this.form.value.title, this.form.value.content, this.form.value.image, this.form.value.category, this.form.value.subCategory);
     }
   }
 

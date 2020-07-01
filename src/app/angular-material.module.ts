@@ -13,6 +13,7 @@ import {
   MatSidenavModule,
   MatDialogModule,
   MatStepperModule,
+  MatChipsModule,
 } from '@angular/material';
 
 
@@ -32,7 +33,8 @@ import {
     MatPaginatorModule,
     MatDialogModule,
     MatStepperModule,
-    MatCardModule
+    MatCardModule,
+    MatChipsModule
   ]
 })
 export class AngularMaterialModule { }

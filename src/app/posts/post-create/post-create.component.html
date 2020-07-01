@@ -38,6 +38,34 @@
     <mat-error *ngIf="form.get('content').invalid">Please enter some content</mat-error>
   </mat-form-field>
 
+  <mat-form-field>
+    <mat-label>Select Category</mat-label>
+    <mat-select
+      required
+      matInput
+      name="category"
+      type="text"
+      (selectionChange)="getCategorySelection()"
+      [formControl]="selectedCategory"
+    >
+      <mat-option *ngFor="let item of categories" [value]='item'>{{item}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Select Role</mat-label>
+    <mat-select
+      required
+      matInput
+      name="subCategory"
+      type="text"
+      (selectionChange)="getSubCategorySelection()"
+      [formControl]="selectedSubCategory"
+    >
+    <mat-option *ngFor="let item of subCategories" [value]='item'>{{item}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
     <button
       mat-raised-button
       color="primary"
