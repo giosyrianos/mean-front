@@ -66,11 +66,11 @@ export class PostService {
           imgPath: string,
           ownerId: string
         }
-    }>(`http://localhost:3000/api/posts/${id}`)
+    }>(`http://localhost:3000/api/posts/${id}`);
 
   }
 
-  addPost(title: string, content: string, image: File, category: string, subCategory: string, id:string) {
+  addPost(title: string, content: string, image: File, category: string, subCategory: string, id: string) {
     const postData = new FormData();
     postData.append('title', title);
     postData.append('content', content);
@@ -80,7 +80,7 @@ export class PostService {
 
     // Give to the property the same name the post function tries to find (line:31@ posts.js)
     postData.append('image', image, title);
-    console.log(postData)
+    console.log(postData);
     this.http.post<{ message: string, post: Post }>('http://localhost:3000/api/posts', postData)
       .subscribe((res) => {
         this.router.navigate(['/']);
@@ -115,43 +115,43 @@ export class PostService {
       });
   }
 
-  putBid(postid: string, userid: string, price: number){
+  putBid(postid: string, userid: string, price: number) {
     const bidData = {
       postId: postid,
       devId: userid,
       price
-    }
-    console.log(bidData)
+    };
+    console.log(bidData);
     this.http.post('http://localhost:3000/api/posts/bid', bidData)
       .subscribe(response => {
-        this.router.navigate(['/'])
-      })
+        this.router.navigate(['/']);
+      });
   }
 
-  acceptBid(postid: string, bidid: string, devid:  string){
+  acceptBid(postid: string, bidid: string, devid: string) {
     const data = {
       postId: postid,
       bidId: bidid,
       devId: devid,
-    }
-    console.log(data)
+    };
+    console.log(data);
     this.http.put('http://localhost:3000/api/posts/accept', data)
     .subscribe(response => {
-      this.router.navigate(['/'])
-    })
+      this.router.navigate(['/']);
+    });
   }
 
-  declineBid(postid: string, bidid: string,devid: string){
+  declineBid(postid: string, bidid: string, devid: string) {
     const data = {
       postId: postid,
       bidId: bidid,
       devId: devid
-    }
-    console.log(data)
+    };
+    console.log(data);
     this.http.put('http://localhost:3000/api/posts/decline', data)
     .subscribe(response => {
-      this.router.navigate(['/'])
-    })
+      this.router.navigate(['/']);
+    });
   }
 
 
