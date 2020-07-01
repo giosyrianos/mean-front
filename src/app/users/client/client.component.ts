@@ -62,7 +62,6 @@ export class ClientComponent implements OnInit {
         console.log(userPosts);
       });
     }else{
-      console.log("edw")
       this.usrService.getDevPosts(userID).subscribe(userPosts => {
         this.isLoading = false;
         console.log(userPosts);
