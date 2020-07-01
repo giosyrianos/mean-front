@@ -68,7 +68,7 @@
       </div>
     </div>
     <mat-action-row *ngIf="userIsAuthenticated && userId===post.owner ">
-      <a [routerLink]="['/edit', post.id]" color="primary" mat-button>EDIT</a>
+      <a [routerLink]="'/edit', post.id" color="primary" mat-button>EDIT</a>
       <button color="warn" mat-button (click)="onDelete(post.id)">DELETE</button>
     </mat-action-row>
   </mat-expansion-panel>
