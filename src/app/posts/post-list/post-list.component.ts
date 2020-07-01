@@ -39,8 +39,8 @@ export class PostListComponent implements OnInit, OnDestroy {
       price: new FormControl(null, {
         validators: [Validators.required]
       })
-    })
-    this.isclient()
+    });
+    this.isclient();
     // this.posts = this.postService.getPosts();
     this.isLoading = true;
     this.userId = this.authService.getUserId();
@@ -60,31 +60,31 @@ export class PostListComponent implements OnInit, OnDestroy {
   }
 
 
-  declineBid(postid: string, bidid: string, devid: string){
-    this.postService.declineBid(postid, bidid, devid)
+  declineBid(postid: string, bidid: string, devid: string) {
+    this.postService.declineBid(postid, bidid, devid);
   }
 
-  acceptBid(postid: string, bidid: string, devid: string){
-    this.postService.acceptBid(postid, bidid, devid)
+  acceptBid(postid: string, bidid: string, devid: string) {
+    this.postService.acceptBid(postid, bidid, devid);
   }
 
-  makeBid(postid: string){
-    if (this.form.invalid){
-      return
+  makeBid(postid: string) {
+    if (this.form.invalid) {
+      return;
     }
     this.isLoading = true;
-    if(!this.form.invalid){
+    if (!this.form.invalid) {
       // console.log(this.form.value.price)
       // console.log(postid)
-      this.postService.putBid(postid, this.userId, this.form.value.price )
+      this.postService.putBid(postid, this.userId, this.form.value.price );
     }
   }
 
-  isclient(){
-    if (this.authService.getUserType() == 'Client'){
-      this.isClient = true
-    }else{
-      return false
+  isclient() {
+    if (this.authService.getUserType() == 'Client') {
+      this.isClient = true;
+    } else {
+      return false;
     }
   }
 
