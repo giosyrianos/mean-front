@@ -14,6 +14,7 @@ export class AppComponent implements OnInit{
   title = 'mean-app';
   postList: Post[] = [];
   showFiller = false;
+  isClient = false;
   constructor(
     private authService: AuthService
   ) { }
@@ -21,6 +22,11 @@ export class AppComponent implements OnInit{
   ngOnInit() {
     this.authService.autoAuthUser();
     this.userIsAuthenticated = this.authService.getIsAuth();
+    if (this.userIsAuthenticated){
+      if (this.authService.getUserType() != 'Client'){
+        this.userIsAuthenticated = false;
+      }
+    }
     this.authListenerSubs = this.authService.getAuthStatusListener()
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
@@ -30,6 +36,7 @@ export class AppComponent implements OnInit{
   le() {
     console.log('works')
   }
+
 
   getPost(post: Post) {
     console.log(post);

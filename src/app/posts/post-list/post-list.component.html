@@ -37,40 +37,35 @@
     </div>
     <div class="offers">
       <hr>
-      <mat-card class="example-card">
-        <mat-card-header>
-          <mat-card-title>Dev Devopoulos</mat-card-title>
-          <mat-card-subtitle>Web designer</mat-card-subtitle>
-        </mat-card-header>
+      <mat-card *ngFor="let bid of post.bids">
+        <mat-card-title> Username</mat-card-title>
+        <mat-card-subtitle> {{bid.devId}}</mat-card-subtitle>
         <mat-card-content>
           <div class="bid-container">
             <label>Bid: </label>
-            <span>$2300</span>
+            <span>${{bid.price}}</span>
           </div>
-          <div clss="actions">
-            <button mat-raised-button color="primary">Accept</button>
-            <button mat-raised-button color="warn">Decline</button>
-          </div>
-        </mat-card-content>
-
-      </mat-card>
-      <mat-card class="example-card">
-        <mat-card-header>
-          <mat-card-title>Dev Devopoulos</mat-card-title>
-          <mat-card-subtitle>Web designer</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="bid-container">
-            <label>Bid: </label>
-            <span>$2300</span>
-          </div>
-          <div clss="actions">
-            <button mat-raised-button color="primary">Accept</button>
-            <button mat-raised-button color="warn">Decline</button>
+          <div class="actions" *ngIf="isClient">
+            <button mat-raised-button color="primary" (click) = 'acceptBid(post.id, bid._id, bid.devId)'>Accept</button>
+            <button mat-raised-button color="warn" (click) = 'declineBid(post.id, bid._id, bid.devId)'>Decline</button>
           </div>
         </mat-card-content>
-
       </mat-card>
+      <div class="actions" *ngIf="!isClient">
+        <form
+        [formGroup]="form"
+        *ngIf="!isLoading"
+        #postForm="ngForm"
+        (submit)="makeBid()">
+        <mat-form-field>
+          <mat-label>Bid Price</mat-label>
+          <input matInput type="number" formControlName="price" placeholder="Place your bid">
+        </mat-form-field>
+        <mat-error *ngIf="form.get('price').invalid">Please enter price</mat-error>
+        </form>
+
+        <button mat-raised-button (click)='makeBid(post.id)' color="primary">Bid</button>
+      </div>
     </div>
     <mat-action-row *ngIf="userIsAuthenticated && userId===post.owner ">
       <a [routerLink]="['/edit', post.id]" color="primary" mat-button>EDIT</a>

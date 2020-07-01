@@ -68,11 +68,6 @@ export class PostService {
   }
 
   addPost(title: string, content: string, image: File, category: string, subCategory: string, id:string) {
-    // const post: Post = {
-    //   title,
-    //   content
-    // };
-    console.log("Edw 3")
     const postData = new FormData();
     postData.append('title', title);
     postData.append('content', content);
@@ -116,6 +111,46 @@ export class PostService {
         this.router.navigate(['/']);
       });
   }
+
+  putBid(postid: string, userid: string, price: number){
+    const bidData = {
+      postId: postid,
+      devId: userid,
+      price
+    }
+    console.log(bidData)
+    this.http.post('http://localhost:3000/api/posts/bid', bidData)
+      .subscribe(response => {
+        this.router.navigate(['/'])
+      })
+  }
+
+  acceptBid(postid: string, bidid: string, devid:  string){
+    const data = {
+      postId: postid,
+      bidId: bidid,
+      devId: devid,
+    }
+    console.log(data)
+    this.http.put('http://localhost:3000/api/posts/accept', data)
+    .subscribe(response => {
+      this.router.navigate(['/'])
+    })
+  }
+
+  declineBid(postid: string, bidid: string,devid: string){
+    const data = {
+      postId: postid,
+      bidId: bidid,
+      devId: devid
+    }
+    console.log(data)
+    this.http.put('http://localhost:3000/api/posts/decline', data)
+    .subscribe(response => {
+      this.router.navigate(['/'])
+    })
+  }
+
 
 
   deletePost(postId: string) {

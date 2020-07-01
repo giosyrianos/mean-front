@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { PageEvent } from '@angular/material';
 
 import { AuthService } from '../../auth/auth.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-post-list',
@@ -19,6 +20,9 @@ export class PostListComponent implements OnInit, OnDestroy {
   private authStatusSup: Subscription;
   public userIsAuthenticated = false;
   public userId: string;
+  private  isClient = false;
+  public price = 0;
+  form: FormGroup;
   isLoading = false;
 
   totalPosts = 0;
@@ -32,6 +36,12 @@ export class PostListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.form = new FormGroup({
+      price: new FormControl(null, {
+        validators: [Validators.required]
+      })
+    })
+    this.isclient()
     // this.posts = this.postService.getPosts();
     this.isLoading = true;
     this.userId = this.authService.getUserId();
@@ -48,6 +58,35 @@ export class PostListComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
         this.userId = this.authService.getUserId();
       });
+  }
+
+
+  declineBid(postid: string, bidid: string, devid: string){
+    this.postService.declineBid(postid, bidid, devid)
+  }
+
+  acceptBid(postid: string, bidid: string, devid: string){
+    this.postService.acceptBid(postid, bidid, devid)
+  }
+
+  makeBid(postid: string){
+    if (this.form.invalid){
+      return
+    }
+    this.isLoading = true;
+    if(!this.form.invalid){
+      // console.log(this.form.value.price)
+      // console.log(postid)
+      this.postService.putBid(postid, this.userId, this.form.value.price )
+    }
+  }
+
+  isclient(){
+    if (this.authService.getUserType() == 'Client'){
+      this.isClient = true
+    }else{
+      return false
+    }
   }
 
   pageChanged(pageData: PageEvent) {
