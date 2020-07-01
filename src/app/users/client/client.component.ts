@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { UserService } from '../users.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Post } from 'src/app/posts/post.model';
+import { map } from 'rxjs/operators';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class ClientComponent implements OnInit {
   profileID: string;
   user: any;
   userType: string;
-  public posts: Post[] = [];
+  public posts: any = [];
   isLoading = false;
 
   constructor(
@@ -31,7 +32,7 @@ export class ClientComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
-    this.profileID = this.authService.getUserId();
+    this.userId = this.authService.getUserId();
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authListenerSubs = this.authService.getAuthStatusListener()
     .subscribe(isAuthenticated => {
@@ -48,19 +49,41 @@ export class ClientComponent implements OnInit {
     this.isLoading = true;
     this.usrService.getSingleUser(userID).subscribe(userData => {
       this.isLoading = false;
+      console.log(this.userId, this.profileID );
       this.user = userData;
+
     });
   }
 
   getProfilesPosts(userID: string) {
     this.isLoading = true;
     this.userType = this.authService.getUserType();
-    if (this.userType == 'Client'){
-      this.usrService.getUsersPosts(userID).subscribe(userPosts => {
+    if (this.userType === 'Client') {
+      this.usrService.getUsersPosts(userID)
+        .pipe(
+          map((postData) => {
+            return {
+              posts: postData.map(post => {
+                return {
+                  title: post.basicFields.title,
+                  content: post.basicFields.description,
+                  id: post._id,
+                  imgPath: post.basicFields.imgPath,
+                  owner: post.basicFields.ownerId,
+                  category: post.basicFields.category,
+                  subCategory: post.basicFields.subCategory,
+                  bids: post.bids
+                };
+              }),
+            };
+          })
+        )
+        .subscribe(userPosts => {
         this.isLoading = false;
-        console.log(userPosts);
+        console.log(userPosts, this.userType);
+        this.posts = userPosts.posts;
       });
-    }else{
+    } else {
       this.usrService.getDevPosts(userID).subscribe(userPosts => {
         this.isLoading = false;
         console.log(userPosts);
@@ -68,8 +91,18 @@ export class ClientComponent implements OnInit {
     }
   }
 
+  declineBid(postid: string, bidid: string, devid: string){
+    // this.postService.declineBid(postid, bidid, devid)
+    console.log(postid);
+  }
+
+  acceptBid(postid: string, bidid: string, devid: string){
+    console.log(postid);
+    // this.postService.acceptBid(postid, bidid, devid)
+  }
+
   onDelete(id) {
-    console.log(id)
+    console.log(id);
   }
 
 }

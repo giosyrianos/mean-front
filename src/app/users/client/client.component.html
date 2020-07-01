@@ -18,10 +18,72 @@
         <label>Full Name: </label>
         {{ user.subUserFields.name }} {{ user.subUserFields.surname }}
       </mat-card-subtitle>
+      <mat-card-subtitle>
+        <label>email: </label>
+        {{ user.userFields.email }}
+      </mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content>
       <h4>Projects:</h4>
+
+      <mat-accordion *ngIf="!isLoading && posts.length > 0"  multi="false">
+        <mat-expansion-panel *ngFor="let post of posts">
+          <mat-expansion-panel-header>
+            {{ post.title }}
+          </mat-expansion-panel-header>
+          <div class="post-img">
+            <img [src]="post.imgPath" [alt]="post.imgPath">
+          </div>
+          <label style="text-decoration: underline;">Description: </label>
+          <p>
+            {{ post.content }}
+          </p>
+          <div class="rest-info">
+            <div class="col-1">
+              <div class="category1">
+                <label>Category: </label>
+                <span>{{post.category}}</span>
+              </div>
+              <div class="category2">
+                <label>Subcategory: </label>
+                <span>{{post.subCategory}}</span>
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="payment">
+                <label>Payment Method: </label>
+                <span>Milestones</span>
+              </div>
+              <div class="duration">
+                <label>Duration: </label>
+                <span>10/6/2020 - 10/1/2021</span>
+              </div>
+            </div>
+          </div>
+          <div class="offers">
+            <hr>
+            <mat-card *ngFor="let bid of post.bids">
+              <mat-card-title> Username</mat-card-title>
+              <mat-card-subtitle> {{bid.devId}}</mat-card-subtitle>
+              <mat-card-content>
+                <div class="bid-container">
+                  <label>Bid: </label>
+                  <span>${{bid.price}}</span>
+                </div>
+                <div class="actions">
+                  <button mat-raised-button color="primary" (click) = "acceptBid(post.id, bid._id, bid.devId)">Accept</button>
+                  <button mat-raised-button color="warn" (click) = "declineBid(post.id, bid._id, bid.devId)">Decline</button>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+          <mat-action-row *ngIf="userIsAuthenticated && userId===profileID">
+            <a [routerLink]="['/edit', post.id]" color="primary" mat-button>EDIT</a>
+            <button color="warn" mat-button (click)="onDelete(post.id)">DELETE</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+      </mat-accordion>
     </mat-card-content>
 
   </mat-card>
