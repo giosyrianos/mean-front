@@ -10,7 +10,7 @@
       matInput
       type="text"
       formControlName="title"
-      placeholder="Post Title"
+      placeholder="Project Title"
     >
     <mat-error *ngIf="form.get('title').invalid">Please enter a title</mat-error>
   </mat-form-field>
@@ -31,7 +31,7 @@
       [formGroup]="form"
       matInput
       rows="4"
-      placeholder="Post Content"
+      placeholder="Project Descriptionn"
       formControlName="content"
     >
     </textarea>
@@ -39,7 +39,7 @@
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Select Category</mat-label>
+    <mat-label>Select Project Category</mat-label>
     <mat-select
       required
       matInput
@@ -70,6 +70,6 @@
       mat-raised-button
       color="primary"
       type="submit"
-    >Save Post</button>
+    >Publish Project</button>
   </form>
 </mat-card>
