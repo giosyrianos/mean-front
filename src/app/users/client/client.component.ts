@@ -55,14 +55,12 @@ export class ClientComponent implements OnInit {
   getProfilesPosts(userID: string) {
     this.isLoading = true;
     this.userType = this.authService.getUserType();
-    console.log(this.userType)
     if (this.userType == 'Client'){
       this.usrService.getUsersPosts(userID).subscribe(userPosts => {
         this.isLoading = false;
         console.log(userPosts);
       });
     }else{
-      console.log("edw")
       this.usrService.getDevPosts(userID).subscribe(userPosts => {
         this.isLoading = false;
         console.log(userPosts);

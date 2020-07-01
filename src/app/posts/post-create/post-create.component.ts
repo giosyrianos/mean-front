@@ -19,7 +19,7 @@ export class PostCreateComponent implements OnInit {
   public enteredContent = '';
   private mode = 'create';
   private postId: string;
-  public post: Post;
+  public post: any;
   private ownerId: string;
   isLoading = false;
   form: FormGroup;
@@ -60,23 +60,25 @@ export class PostCreateComponent implements OnInit {
         this.postId = paramMap.get('postId');
         this.isLoading = true;
         this.postService.getPost(this.postId).subscribe(postData => {
+          console.log(postData)
           this.isLoading = false;
-          this.post = {
+          const post = {
             id: postData._id,
-            title: postData.title,
-            content: postData.content,
-            imgPath: postData.imgPath,
-            owner: postData.owner,
-            category: postData.category,
-            subCategory: postData.subCategory
+            title: postData.basicFields.title,
+            content: postData.basicFields.description,
+            imgPath: postData.basicFields.imgPath,
+            owner: postData.basicFields.ownerId,
+            category: postData.basicFields.category,
+            subCategory: postData.basicFields.subCategory
           };
+          console.log(post)
           this.form.setValue({
-            title: this.post.title,
-            content: this.post.content,
-            image: this.post.imgPath,
-            category: this.post.category,
-            subCategory: this.post.subCategory
+            title: post.title,
+            content: post.content,
+            image: post.imgPath,
           });
+          this.selectedCategory.setValue(post.category)
+          this.selectedSubCategory.setValue(post.subCategory)
         });
       } else {
         this.mode = 'create';

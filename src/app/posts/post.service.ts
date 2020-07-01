@@ -57,14 +57,17 @@ export class PostService {
 
   getPost(id: string) {
     return this.http.get<{
-      _id: string;
-      title: string;
-      content: string;
-      imgPath: string;
-      owner: string;
-      category: string;
-      subCategory: string;
-    }>(`http://localhost:3000/api/posts/${id}`);
+        _id: string,
+        basicFields: {
+          title: string,
+          description: string,
+          category: string,
+          subCategory: string,
+          imgPath: string,
+          ownerId: string
+        }
+    }>(`http://localhost:3000/api/posts/${id}`)
+
   }
 
   addPost(title: string, content: string, image: File, category: string, subCategory: string, id:string) {
