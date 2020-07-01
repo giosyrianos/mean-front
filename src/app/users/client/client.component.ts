@@ -36,18 +36,24 @@ export class ClientComponent implements OnInit {
     });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       this.profileID = paramMap.get('userid');
-      this.usrService.getSingleUser(this.profileID).subscribe(userData => {
-        this.isLoading = false;
-        this.user = userData;
-      });
+      this.getUserData(this.profileID);
+      this.getProfilesPosts(this.profileID);
     });
   }
 
   getUserData(userID: string) {
+    this.isLoading = true;
     this.usrService.getSingleUser(userID).subscribe(userData => {
-        this.isLoading = false;
-        console.log(userData);
-        this.user = userData;
+      this.isLoading = false;
+      this.user = userData;
+    });
+  }
+
+  getProfilesPosts(userID: string) {
+    this.isLoading = true;
+    this.usrService.getUsersPosts(userID).subscribe(userPosts => {
+      this.isLoading = false;
+      console.log(userPosts);
     });
   }
 
