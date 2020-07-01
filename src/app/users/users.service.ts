@@ -38,9 +38,11 @@ export class UserService{
     return this.http.get(`http://localhost:3000/api/user/posts/${id}`);
   }
 
-  updateUser(userID, newData: any ) {
-    console.log(newData);
-    this.http.put(`http://localhost:3000/api/user/${userID}`, newData)
+  updateUser(userID:string , newData: any) {
+    const userData = new FormData();
+    userData.append('newUser', JSON.stringify(newData));
+    userData.append('image', newData.image);
+    this.http.put(`http://localhost:3000/api/user/${userID}`, userData)
       .subscribe(response => {
         console.log(response);
       });

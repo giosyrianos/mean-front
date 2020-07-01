@@ -65,7 +65,8 @@ export class EditUserComponent implements OnInit {
       image: new FormControl(this.user.subUserFields.imgPath, {
         validators: [Validators.required],
         asyncValidators: [mimeType]
-      })
+      }),
+      userType: new FormControl(this.authService.getUserType(),{})
     });
   }
 
@@ -89,6 +90,7 @@ export class EditUserComponent implements OnInit {
       }, 2000);
       return;
     }
+    this.userId = this.authService.getUserId()
     this.isLoading = true;
     console.log(this.form.value);
     this.userService.updateUser(this.userId, this.form.value);

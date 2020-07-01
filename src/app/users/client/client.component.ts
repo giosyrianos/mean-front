@@ -107,10 +107,33 @@ export class ClientComponent implements OnInit, OnDestroy {
         });
       });
     } else {
-      this.usrService.getDevPosts(userID).subscribe(userPosts => {
-        this.isLoading = false;
-        console.log(userPosts);
-      })
+      this.usrService.getDevPosts(userID)
+        .pipe(
+          map((postData: any) => {
+            return {
+              posts: postData.map(post => {
+                return {
+                  title: post.basicFields.title,
+                  content: post.basicFields.description,
+                  id: post._id,
+                  imgPath: post.basicFields.imgPath,
+                  owner: post.basicFields.ownerId,
+                  category: post.basicFields.category,
+                  subCategory: post.basicFields.subCategory,
+                  bids: post.bids
+                };
+              }),
+            };
+          })
+        )
+        .subscribe(userPosts => {
+          this.isLoading = false;
+          console.log(userPosts, this.userType);
+          this.posts = userPosts.posts;
+          this.postsListUpdated.next({
+          posts: [...this.posts],
+        });
+      });
     }
   }
 
