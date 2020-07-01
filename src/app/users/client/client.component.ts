@@ -4,6 +4,7 @@ import { AuthService } from '../../auth/auth.service';
 import { Subscription } from 'rxjs';
 import { UserService } from '../users.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { Post } from 'src/app/posts/post.model';
 
 
 @Component({
@@ -17,6 +18,8 @@ export class ClientComponent implements OnInit {
   userId: string;
   profileID: string;
   user: any;
+  userType: string;
+  public posts: Post[] = [];
   isLoading = false;
 
   constructor(
@@ -51,10 +54,20 @@ export class ClientComponent implements OnInit {
 
   getProfilesPosts(userID: string) {
     this.isLoading = true;
-    this.usrService.getUsersPosts(userID).subscribe(userPosts => {
-      this.isLoading = false;
-      console.log(userPosts);
-    });
+    this.userType = this.authService.getUserType();
+    console.log(this.userType)
+    if (this.userType == 'Client'){
+      this.usrService.getUsersPosts(userID).subscribe(userPosts => {
+        this.isLoading = false;
+        console.log(userPosts);
+      });
+    }else{
+      console.log("edw")
+      this.usrService.getDevPosts(userID).subscribe(userPosts => {
+        this.isLoading = false;
+        console.log(userPosts);
+      })
+    }
   }
 
   onDelete(id) {

@@ -34,6 +34,10 @@ export class UserService{
     return this.http.get(`http://localhost:3000/api/posts/client/${id}`);
   }
 
+  getDevPosts(id: string) {
+    return this.http.get(`http://localhost:3000/api/user/posts/${id}`);
+  }
+
   // getUsersPost(postsPerPage: number, currentPage: number) {
   //   const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
   //   this.http
