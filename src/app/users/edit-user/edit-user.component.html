@@ -1,34 +1,55 @@
-<form>
+<mat-spinner *ngIf="isLoading" ></mat-spinner>
+<form
+  *ngIf="!isLoading"
+  [formGroup]="form"
+  (submit)="onSaveChanges()"
+>
     <div class="img-container">
         <img [src]="user.subUserFields.imgPath" width="180" alt="">
+        <div>
+          <button mat-fab color="primary" type="button" (click)="filePicker.click()"><mat-icon>edit</mat-icon></button>
+          <input type="file" #filePicker (change)="onFileImported($event)">
       </div>
-    <mat-form-field>
+
+        <div
+        class="img-preview"
+        *ngIf="imgPreview !== '' && imgPreview">
+        <img [src]="imgPreview">
+      </div>
+      </div>
+    <mat-form-field class="row1">
       <mat-label>Usename</mat-label>
-      <input matInput  value="user.userFields.username">
+      <input matInput formControlName="username">
     </mat-form-field>
-  
-    <table cellspacing="0"><tr>
-      <td><mat-form-field>
+
+    <div class="row2">
+      <mat-form-field>
         <mat-label>First name</mat-label>
-        <input matInput value="user.subUserFields.name">
-      </mat-form-field></td>
-      <td><mat-form-field class="example-full-width">
+        <input matInput formControlName="name">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
         <mat-label>Last Name </mat-label>
-        <input matInput value="user.subUserFields.surname">
-      </mat-form-field></td>
-    </tr></table>
-  
-    <p>
+        <input matInput formControlName="surname" [value]="user.subUserFields.surname">
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <mat-label>Email</mat-label>
+        <input formControlName="email" matInput [value]="">
+      </mat-form-field>
+    </div>
+
+    <div class="row3">
       <mat-form-field class="example-full-width">
         <mat-label>Description</mat-label>
-        <textarea matInput placeholder="Desc" value="user.description"> </textarea>
+        <textarea rows="4"  matInput placeholder="Desc" [value]="user.description"> </textarea>
       </mat-form-field>
-    </p>
-  
-    <p>
-        <mat-form-field>
-            <mat-label>New Password</mat-label>
-            <input matInput type="password">
-        </mat-form-field>
-    </p>
+    </div>
+
+    <div class="row4">
+      <mat-form-field>
+        <mat-label>New Password</mat-label>
+        <input matInput type="password" formControlName="password" placeholder="password">
+      </mat-form-field>
+    </div>
+    <button mat-raised-button color="primary" style="font-size: 20px" type="submit">Save Changes</button>
   </form>

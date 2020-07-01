@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ClientComponent } from './client/client.component';
 import { DevsComponent } from './devs/devs.component';
 import { AngularMaterialModule } from '../angular-material.module';
-
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UsersRoutingModule } from './users-routing.module';
 import { EditUserComponent } from './edit-user/edit-user.component';
 
@@ -12,7 +12,9 @@ import { EditUserComponent } from './edit-user/edit-user.component';
   imports: [
     CommonModule,
     UsersRoutingModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class UsersModule { }

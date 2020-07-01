@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http/';
 import { Subject, BehaviorSubject } from 'rxjs';
 
-import { map } from 'rxjs/operators';
+import { map, retry } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +36,14 @@ export class UserService{
 
   getDevPosts(id: string) {
     return this.http.get(`http://localhost:3000/api/user/posts/${id}`);
+  }
+
+  updateUser(userID, newData: any ) {
+    console.log(newData);
+    this.http.put(`http://localhost:3000/api/user/${userID}`, newData)
+      .subscribe(response => {
+        console.log(response);
+      });
   }
 
   // getUsersPost(postsPerPage: number, currentPage: number) {

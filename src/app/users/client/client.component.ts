@@ -33,7 +33,7 @@ export class ClientComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => {
       return false;
     };
 
@@ -81,7 +81,7 @@ export class ClientComponent implements OnInit, OnDestroy {
     if (this.userType === 'Client') {
       this.usrService.getUsersPosts(userID)
         .pipe(
-          map((postData) => {
+          map((postData: any) => {
             return {
               posts: postData.map(post => {
                 return {

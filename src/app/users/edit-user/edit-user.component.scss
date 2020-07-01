@@ -1,0 +1,39 @@
+.img-container {
+  display: flex;
+
+  >div {
+    margin-left: 10px;
+    button {
+      transform: translate(-40px, 100px);
+      position: relative;
+      height: 50px;
+      width: 50px;
+    }
+  }
+
+  input[type=file] {
+    visibility: hidden;
+  }
+
+
+}
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .mat-raised-button {
+    width: 20%;
+    margin-left: auto;
+  }
+
+}
+*[class^='row'] {
+  display: flex;
+  flex-direction: column;
+}
+
+.img-preview img {
+  max-height: 120px;
+}
