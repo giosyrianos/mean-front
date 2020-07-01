@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy, EventEmitter, Output, ViewContainerRef, AfterViewInit, ViewChild, ViewRef,TemplateRef} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { AuthService } from '../../auth/auth.service';
 import { Subscription, Subject } from 'rxjs';
 import { UserService } from '../users.service';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router, NavigationEnd } from '@angular/router';
 import { Post } from 'src/app/posts/post.model';
 import { map } from 'rxjs/operators';
 
@@ -13,7 +13,7 @@ import { map } from 'rxjs/operators';
   templateUrl: './client.component.html',
   styleUrls: ['./client.component.scss']
 })
-export class ClientComponent implements OnInit {
+export class ClientComponent implements OnInit, OnDestroy {
   authListenerSubs: Subscription;
   userIsAuthenticated = false;
   userId: string;
@@ -23,7 +23,7 @@ export class ClientComponent implements OnInit {
   public posts: any = [];
   isLoading = false;
 
-  
+  mySubscription: any;
 
   private postsListUpdated = new Subject<{posts: any}>();
 
@@ -32,7 +32,18 @@ export class ClientComponent implements OnInit {
     private usrService: UserService,
     private route: ActivatedRoute,
     private router: Router
-  ) { }
+  ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+
+    this.mySubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Trick the Router into believing it's last link wasn't previously loaded
+        this.router.navigated = false;
+      }
+    });
+   }
 
 
   ngOnInit() {
@@ -104,7 +115,7 @@ export class ClientComponent implements OnInit {
   }
 
   goToDev(devId: any) {
-
+    this.router.navigate([`/profile/${devId}`]);
   }
 
   declineBid(postid: string, bidid: string, devid: string){
@@ -119,6 +130,12 @@ export class ClientComponent implements OnInit {
 
   onDelete(id) {
     console.log(id);
+  }
+
+  ngOnDestroy() {
+    if (this.mySubscription) {
+      this.mySubscription.unsubscribe();
+    }
   }
 
 }

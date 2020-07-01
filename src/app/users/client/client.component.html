@@ -9,7 +9,7 @@
           <img [src]="user.subUserFields.imgPath" width="180" alt="">
         </div>
         {{ user.userFields.username }}
-        <mat-card-actions>
+        <mat-card-actions *ngIf="profileID === userId">
           <a [routerLink]="'/profile/edit/' + userId" color="primary" mat-raised-button>EDIT</a>
           <button color="warn" mat-raised-button (click)='onDelete(user._id)'>DELETE</button>
         </mat-card-actions>
