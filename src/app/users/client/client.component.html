@@ -10,7 +10,7 @@
         </div>
         {{ user.userFields.username }}
         <mat-card-actions>
-          <a [routerLink]="'/profile/edit' + user._id" color="primary" mat-raised-button>EDIT</a>
+          <a [routerLink]="'/profile/edit/' + user._id" color="primary" mat-raised-button>EDIT</a>
           <button color="warn" mat-raised-button (click)='onDelete(user._id)'>DELETE</button>
         </mat-card-actions>
       </mat-card-title>
