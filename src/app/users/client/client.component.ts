@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter, Output, ViewContainerRef, AfterViewInit, ViewChild, ViewRef,TemplateRef} from '@angular/core';
 
 import { AuthService } from '../../auth/auth.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 import { UserService } from '../users.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Post } from 'src/app/posts/post.model';
@@ -23,10 +23,15 @@ export class ClientComponent implements OnInit {
   public posts: any = [];
   isLoading = false;
 
+  
+
+  private postsListUpdated = new Subject<{posts: any}>();
+
   constructor(
     private authService: AuthService,
     private usrService: UserService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
 
@@ -43,6 +48,10 @@ export class ClientComponent implements OnInit {
       this.getUserData(this.profileID);
       this.getProfilesPosts(this.profileID);
     });
+  }
+
+  updatePostsListener() {
+    return this.postsListUpdated.asObservable();
   }
 
   getUserData(userID: string) {
@@ -79,9 +88,12 @@ export class ClientComponent implements OnInit {
           })
         )
         .subscribe(userPosts => {
-        this.isLoading = false;
-        console.log(userPosts, this.userType);
-        this.posts = userPosts.posts;
+          this.isLoading = false;
+          console.log(userPosts, this.userType);
+          this.posts = userPosts.posts;
+          this.postsListUpdated.next({
+          posts: [...this.posts],
+        });
       });
     } else {
       this.usrService.getDevPosts(userID).subscribe(userPosts => {
@@ -89,6 +101,10 @@ export class ClientComponent implements OnInit {
         console.log(userPosts);
       })
     }
+  }
+
+  goToDev(devId: any) {
+
   }
 
   declineBid(postid: string, bidid: string, devid: string){

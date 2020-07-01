@@ -1,7 +1,7 @@
 <div class="card-container">
 
   <mat-spinner *ngIf="isLoading"></mat-spinner>
-  <mat-card *ngIf="!isLoading" class="example-card">
+  <mat-card *ngIf="!isLoading && user" class="example-card">
 
     <mat-card-header>
       <mat-card-title>
@@ -10,7 +10,7 @@
         </div>
         {{ user.userFields.username }}
         <mat-card-actions>
-          <a [routerLink]="'/profile/edit/' + user._id" color="primary" mat-raised-button>EDIT</a>
+          <a [routerLink]="'/profile/edit/' + userId" color="primary" mat-raised-button>EDIT</a>
           <button color="warn" mat-raised-button (click)='onDelete(user._id)'>DELETE</button>
         </mat-card-actions>
       </mat-card-title>
@@ -27,7 +27,7 @@
     <mat-card-content>
       <h4>Projects:</h4>
 
-      <mat-accordion *ngIf="!isLoading && posts.length > 0"  multi="false">
+      <mat-accordion #vc *ngIf="!isLoading && posts.length > 0"  multi="false">
         <mat-expansion-panel *ngFor="let post of posts">
           <mat-expansion-panel-header>
             {{ post.title }}
@@ -64,7 +64,7 @@
           <div class="offers">
             <hr>
             <mat-card *ngFor="let bid of post.bids">
-              <mat-card-title> Username</mat-card-title>
+              <mat-card-title> Username <mat-icon style="cursor: pointer;" (click)="goToDev(bid.devId)" color="primary">person</mat-icon></mat-card-title>
               <mat-card-subtitle> {{bid.devId}}</mat-card-subtitle>
               <mat-card-content>
                 <div class="bid-container">
