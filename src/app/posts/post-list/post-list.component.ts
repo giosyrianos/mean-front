@@ -22,6 +22,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   public userId: string;
   public  isClient = false;
   public price = 0;
+  public userType: string;
   form: FormGroup;
   isLoading = false;
 
@@ -44,6 +45,7 @@ export class PostListComponent implements OnInit, OnDestroy {
     // this.posts = this.postService.getPosts();
     this.isLoading = true;
     this.userId = this.authService.getUserId();
+    this.userType = this.authService.getUserType()
     this.postService.getPosts(this.postsPerPage, this.currentPage);
     this.postsSub = this.postService.updatePostsListener()
       .subscribe((postData: {posts: Post[], postCount: number}) => {

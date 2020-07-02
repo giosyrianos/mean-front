@@ -250,8 +250,8 @@ export class ClientComponent implements OnInit, OnDestroy {
     this.postService.acceptBid(postid, bidid, devid, this.userId)
   }
 
-  onDelete(id) {
-    console.log(id);
+  onDelete(id: string) {
+    this.usrService.deleteUser(id)
   }
 
   ngOnDestroy() {

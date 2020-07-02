@@ -66,8 +66,11 @@
         <button mat-raised-button (click)='makeBid(post.id)' color="primary">Bid</button>
       </div>
     </div>
-    <mat-action-row *ngIf="userIsAuthenticated && userId===post.owner ">
-      <a [routerLink]="['/edit', post.id]" color="primary" mat-button>EDIT</a>
+    <mat-action-row *ngIf="userIsAuthenticated && userId===post.owner">
+      <a [routerLink]="['/edit', post.id]"  color="primary" mat-button>EDIT</a>
+      <button color="warn" mat-button (click)="onDelete(post.id)">DELETE</button>
+    </mat-action-row>
+    <mat-action-row *ngIf="userIsAuthenticated && userType == 'admin'">
       <button color="warn" mat-button (click)="onDelete(post.id)">DELETE</button>
     </mat-action-row>
   </mat-expansion-panel>

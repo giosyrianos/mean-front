@@ -125,16 +125,15 @@ export class PostCreateComponent implements OnInit {
       this.form.reset();
     } else {
       this.ownerId = this.authService.getUserId();
-      console.log(this.ownerId);
-      // this.postService.updatePost(
-      //   this.postId,
-      //   this.form.value.title,
-      //   this.form.value.content,
-      //   this.form.value.image,
-      //   this.selectedCategory.value,
-      //   this.selectedSubCategory.value,
-      //   this.ownerId
-      // );
+      this.postService.updatePost(
+        this.postId,
+        this.form.value.title,
+        this.form.value.content,
+        this.form.value.image,
+        this.selectedCategory.value,
+        this.selectedSubCategory.value,
+        this.ownerId
+      );
     }
     console.log('worked');
   }
