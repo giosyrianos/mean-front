@@ -43,6 +43,10 @@ export class UserService{
     return this.http.get(`http://localhost:3000/api/user/posts/${id}`);
   }
 
+  getUsers(){
+    return this.http.get('http://localhost:3000/api/user/')
+  }
+
   updateUser(userID:string , newData: any) {
     const userData = new FormData();
     userData.append('newUser', JSON.stringify(newData));

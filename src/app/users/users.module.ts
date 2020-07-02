@@ -6,6 +6,7 @@ import { AngularMaterialModule } from '../angular-material.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UsersRoutingModule } from './users-routing.module';
 import { EditUserComponent } from './edit-user/edit-user.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [ClientComponent, DevsComponent, EditUserComponent],

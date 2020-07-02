@@ -1,0 +1,33 @@
+<div class="card-container">
+
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <mat-card *ngIf="!isLoading" class="example-card">
+        <mat-card-header>
+
+        </mat-card-header>
+        <mat-card-content>
+        <h4 *ngIf="userType == 'Admin'">Users:</h4>
+      <mat-accordion #vc *ngIf="!isLoading && users.length > 0"  multi="false">
+        <mat-expansion-panel *ngFor="let user of users">
+          <mat-expansion-panel-header>
+            {{ user.username }}              
+            <mat-icon style="cursor: pointer;" (click)="goToProfile(user.id)" color="primary">person</mat-icon>
+
+          </mat-expansion-panel-header>
+          <div class="rest-info">
+            <div class="col-1">
+              <div class="category1">
+                <label>Email: </label>
+                <span>{{user.email}}</span>
+              </div>
+              <div class="category2">
+                <label>User Type: </label>
+                <span>{{user.userType}}</span>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-card-content>
+    </mat-card>
+</div>
