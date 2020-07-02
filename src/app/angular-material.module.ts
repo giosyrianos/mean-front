@@ -14,6 +14,7 @@ import {
   MatDialogModule,
   MatStepperModule,
   MatChipsModule,
+  MatListModule
 } from '@angular/material';
 
 
@@ -34,7 +35,8 @@ import {
     MatDialogModule,
     MatStepperModule,
     MatCardModule,
-    MatChipsModule
+    MatChipsModule,
+    MatListModule
   ]
 })
 export class AngularMaterialModule { }
