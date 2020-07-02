@@ -121,16 +121,16 @@ export class PostService {
     }
   }
 
-  putBid(postid: string, userid: string, price: number) {
+  putBid(postid: string, userid: string, price: number, userID: string) {
     const bidData = {
       postId: postid,
       devId: userid,
       price
     };
     console.log(bidData);
-    this.http.post<{message: string}>('http://localhost:3000/api/posts/bid', bidData)
+    this.http.post('http://localhost:3000/api/posts/bid', bidData)
       .subscribe(response => {
-        this.router.navigate(['/']);
+        this.router.navigate(['/profile/'+ userID]);
       });
   }
 
@@ -141,8 +141,9 @@ export class PostService {
       devId: devid,
     };
     console.log(data);
-    this.http.put('http://localhost:3000/api/posts/accept', data)
+    this.http.put('http://localhost:3000/api/posts/bid/accept', data)
     .subscribe(response => {
+      console.log(response)
       this.router.navigate(['/']);
     });
   }
@@ -153,8 +154,8 @@ export class PostService {
       bidId: bidid,
       devId: devid
     };
-    console.log(data);
-    this.http.put('http://localhost:3000/api/posts/decline', data)
+    console.log("data",data);
+    this.http.put('http://localhost:3000/api/posts/bid/decline', data)
     .subscribe(response => {
       this.router.navigate(['/']);
     });

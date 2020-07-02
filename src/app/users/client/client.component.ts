@@ -6,6 +6,7 @@ import { UserService } from '../users.service';
 import { ActivatedRoute, ParamMap, Router, NavigationEnd } from '@angular/router';
 import { Post } from 'src/app/posts/post.model';
 import { map } from 'rxjs/operators';
+import { PostService } from 'src/app/posts/post.service';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class ClientComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private usrService: UserService,
+    private postService: PostService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -155,13 +157,14 @@ export class ClientComponent implements OnInit, OnDestroy {
   }
 
   declineBid(postid: string, bidid: string, devid: string){
-    // this.postService.declineBid(postid, bidid, devid)
-    console.log(postid);
+    console.log("gere")
+    this.postService.declineBid(postid, bidid, devid)
+    // console.log(postid);
   }
 
   acceptBid(postid: string, bidid: string, devid: string){
-    console.log(postid);
-    // this.postService.acceptBid(postid, bidid, devid)
+    // console.log(postid);
+    this.postService.acceptBid(postid, bidid, devid)
   }
 
   onDelete(id) {

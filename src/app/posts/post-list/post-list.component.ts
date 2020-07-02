@@ -74,8 +74,8 @@ export class PostListComponent implements OnInit, OnDestroy {
     }
     this.isLoading = true;
     if (!this.form.invalid) {
-      this.postService.putBid(postid, this.userId, this.form.value.price );
-      this.isLoading = false;
+      this.userId = this.authService.getUserId()
+      this.postService.putBid(postid, this.userId, this.form.value.price, this.userId );
     }
   }
 
