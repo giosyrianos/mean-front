@@ -34,6 +34,10 @@ export class UserService{
     return this.http.get(`http://localhost:3000/api/posts/client/${id}`);
   }
 
+  getDevComments(id: string) {
+    return this.http.get(`http://localhost:3000/api/user/devs/comments/${id}`)
+  }
+
   getDevPosts(id: string) {
     console.log(id)
     return this.http.get(`http://localhost:3000/api/user/posts/${id}`);

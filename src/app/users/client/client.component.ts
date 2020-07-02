@@ -23,12 +23,15 @@ export class ClientComponent implements OnInit, OnDestroy {
   user: any;
   userType: string;
   public posts: any = [];
+  public devComments: any =[];
   isLoading = false;
   taskform: FormGroup;
+  commentform: FormGroup;
 
   mySubscription: any;
 
   private postsListUpdated = new Subject<{posts: any}>();
+  private commentsListUpdated = new Subject<{comments: any}>();
 
   constructor(
     private authService: AuthService,
@@ -51,6 +54,14 @@ export class ClientComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
+    this.commentform = new FormGroup({
+      rating: new FormControl(null, {
+        validators: [Validators.required]
+      }),
+      comment: new FormControl(null, {
+        validators: [Validators.required]
+      })
+    })
     this.taskform = new FormGroup({
       name: new FormControl(null, {
         validators: [Validators.required]
@@ -70,11 +81,55 @@ export class ClientComponent implements OnInit, OnDestroy {
       this.profileID = paramMap.get('userid');
       this.getUserData(this.profileID);
       this.getProfilesPosts(this.profileID);
+      this.getComments(this.profileID);
     });
+  }
+
+  getComments(devId: string){
+    if(this.authService.getUserType() == 'Client'){
+      return
+    }else{
+      this.usrService.getDevComments(devId)
+        .pipe(
+          map((commentsData: any) => {
+            return {
+              comments: commentsData.comments.map(comment => {
+                return {
+                  rating: comment.rating,
+                  comment: comment.comment,
+                  username: comment.username
+                };
+              }),
+            };
+          })
+        )
+        .subscribe(devComments => {
+          this.isLoading = false;
+          console.log(devComments, this.userType);
+          this.devComments = devComments.comments;
+          this.commentsListUpdated.next({
+          comments: [...this.devComments],
+        });
+    }
+  )}
+}
+
+  commentDev(postId: string, devId: string) {
+    if (this.commentform.invalid) {
+      return;
+    }
+    if (!this.commentform.invalid) {
+      this.userId = this.authService.getUserId()
+      this.postService.commentDev(postId, this.commentform.value.rating, this.commentform.value.comment, this.userId, devId );
+    }
   }
 
   updatePostsListener() {
     return this.postsListUpdated.asObservable();
+  }
+
+  updateCommentsListener() {
+    return this.commentsListUpdated.asObservable();
   }
   
   addTask(postID: string){
@@ -121,7 +176,9 @@ export class ClientComponent implements OnInit, OnDestroy {
                   subCategory: post.basicFields.subCategory,
                   bids: post.bids,
                   devId: post.devId,
-                  tasks: post.tasks
+                  tasks: post.tasks,
+                  completed: post.completed,
+                  commented: post.commented
                 };
               }),
             };
@@ -152,7 +209,9 @@ export class ClientComponent implements OnInit, OnDestroy {
                   subCategory: post.basicFields.subCategory,
                   bids: post.bids,
                   devId: post.devId,
-                  tasks: post.tasks
+                  tasks: post.tasks,
+                  completed: post.completed,
+                  commented: post.commented
                 };
               }),
             };
@@ -171,6 +230,11 @@ export class ClientComponent implements OnInit, OnDestroy {
 
   goToDev(devId: any) {
     this.router.navigate([`/profile/${devId}`]);
+  }
+
+  submitCompletition(postId: string){
+    console.log(postId)
+    this.postService.completePost(postId);
   }
 
   declineBid(postid: string, bidid: string, devid: string){

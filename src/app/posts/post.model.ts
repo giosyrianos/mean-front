@@ -9,4 +9,6 @@ export  interface Post {
   subCategory: string;
   devId?: string;
   tasks?: any[];
+  completed: boolean;
+  commented: boolean;
 }

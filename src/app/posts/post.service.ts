@@ -185,6 +185,31 @@ export class PostService {
     });
   }
 
+  completePost(postId: string){
+    const data = {
+      postId: postId
+    }
+    this.http.put('http://localhost:3000/api/posts/set/complete', data)
+    .subscribe(response => {
+      this.router.navigate(['/']);
+    });
+  }
+
+  commentDev(postId: string, rating: number, comment: string, clientId: string, devId:string){
+    console.log(postId)
+    const comm = {
+      postId,
+      rating,
+      comment,
+      clientId,
+      devId
+    }
+    this.http.post('http://localhost:3000/api/user/comment', comm)
+    .subscribe(response => {
+      this.router.navigate(['/profile/' + clientId]);
+    });
+  }
+
 
   deletePost(postId: string) {
     return this.http.delete(`http://localhost:3000/api/posts/${postId}`);

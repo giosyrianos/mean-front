@@ -62,8 +62,9 @@
                 <span *ngIf="post.devId == null">False</span>
               </div>
               <div class="duration">
-                <label>Duration: </label>
-                <span>10/6/2020 - 10/1/2021</span>
+                <label>Completed: </label>
+                <span *ngIf="post.completed == true">True</span>
+                <span *ngIf="post.completed == false">False</span>
               </div>
             </div>
           </div>
@@ -84,7 +85,10 @@
               </mat-card-content>
             </mat-card>
           </div>
-          <h3> Tasks: </h3>
+          <div class="row">
+            <h3> Tasks: </h3>
+            <button mat-raised-button color="primary"  *ngIf="userType == 'Developer' && post.devId != null && post.completed != true" (click) = "submitCompletition(post.id)">Submit Completiotion</button>
+          </div>
           <div class="offers">
             <hr>
             <mat-card *ngFor="let task of post.tasks">
@@ -97,12 +101,12 @@
                   <label>Description: </label>
                   <span>{{task.description}}</span>
                 </div>
-                <div class="actions" *ngIf="userType =='Developer' && task.completed != true ">
+                <div class="actions" *ngIf="userType =='Developer' && task.completed != true">
                   <button mat-raised-button color="primary" (click) = "completeTask(post.id, task._id)">Complete Task</button>
                 </div>
               </mat-card-content>
             </mat-card>
-            <mat-action-row *ngIf="userType =='Developer' && post.devId != null">
+            <mat-action-row *ngIf="userType =='Developer' && post.devId != null && post.completed != true">
               <form
                 [formGroup]="taskform"
                 *ngIf="!isLoading"
@@ -126,13 +130,58 @@
                 </mat-form-field>
                 <mat-error *ngIf="taskform.get('description').invalid">Please enter description</mat-error>
                 </form>
-              <button mat-raised-button color="primary" (click) = "addTask(post.id)">Add Task</button>
+              <button mat-raised-button color="primary" (click) = "addTask(post.id)" >Add Task</button>
             </mat-action-row>
           </div>
           <mat-action-row *ngIf="userIsAuthenticated && userId===profileID && userType =='Client'">
-            <a [routerLink]="['/edit', post.id]" color="primary" mat-button>EDIT</a>
+            <a [routerLink]="['/edit', post.id]" color="primary" *ngIf="post.devId == null" mat-button>EDIT</a>
+            <form
+                [formGroup]="commentform"
+                *ngIf="!isLoading && post.completed == true && post.commented == false"
+                #postForm="ngForm"
+                (submit)="commentDev(post.id, post.devId)">
+                <mat-form-field>
+                  <mat-label>Rating</mat-label>
+                  <input matInput type="number" formControlName="rating" min="1" max="5">
+                </mat-form-field>
+                <mat-error *ngIf="commentform.get('rating').invalid">Please enter rating</mat-error>
+                <mat-form-field>
+                  <mat-label>Comment</mat-label>
+                  <textarea
+                    [formGroup]="commentform"
+                    matInput
+                    rows="3"
+                    placeholder="Comment Descriptionn"
+                    formControlName="comment"
+                  >
+                  </textarea>
+                </mat-form-field>
+                <mat-error *ngIf="commentform.get('comment').invalid">Please enter description</mat-error>
+                <button mat-raised-button color="primary">Submit Comment</button>
+            </form>
             <button color="warn" mat-button (click)="onDelete(post.id)">DELETE</button>
           </mat-action-row>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <h4>Comments:</h4>
+      <mat-accordion #vc *ngIf="!isLoading && devComments.length > 0"  multi="false">
+        <mat-expansion-panel *ngFor="let comment of devComments">
+          <mat-expansion-panel-header>
+            {{ comment.username }}
+          </mat-expansion-panel-header>
+          <div class="rest-info">
+            <div class="col-1">
+              <div class="category1">
+                <label>Description: </label>
+                <span>{{comment.comment}}</span>
+              </div>
+              <div class="category2">
+                <label>Rating: </label>
+                <span>{{comment.rating}}/5</span>
+              </div>
+            </div>
+          </div>
         </mat-expansion-panel>
       </mat-accordion>
     </mat-card-content>
