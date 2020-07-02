@@ -20,7 +20,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   private authStatusSup: Subscription;
   public userIsAuthenticated = false;
   public userId: string;
-  private  isClient = false;
+  public  isClient = false;
   public price = 0;
   form: FormGroup;
   isLoading = false;

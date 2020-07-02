@@ -51,7 +51,7 @@
           </div>
         </mat-card-content>
       </mat-card>
-      <div class="actions" *ngIf="!isClient">
+      <div class="actions" *ngIf="!isClient && userIsAuthenticated">
         <form
         [formGroup]="form"
         *ngIf="!isLoading"
