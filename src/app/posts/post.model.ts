@@ -7,4 +7,6 @@ export  interface Post {
   bids?: any[];
   category: string;
   subCategory: string;
+  devId?: string;
+  tasks?: any[];
 }

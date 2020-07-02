@@ -44,9 +44,9 @@ export class UserService{
     userData.append('newUser', JSON.stringify(newData));
     userData.append('image', newData.image);
     this.http.put(`http://localhost:3000/api/user/${userID}`, userData)
-      .subscribe(response => {
-        console.log(response);
-      });
+    .subscribe(response => {
+      this.router.navigate(['/profile/'+ userID]);
+    });
   }
 
   // getUsersPost(postsPerPage: number, currentPage: number) {

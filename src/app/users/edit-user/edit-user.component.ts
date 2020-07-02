@@ -94,5 +94,6 @@ export class EditUserComponent implements OnInit {
     this.isLoading = true;
     console.log(this.form.value);
     this.userService.updateUser(this.userId, this.form.value);
+    
   }
 }

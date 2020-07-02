@@ -25,13 +25,17 @@
     </mat-card-header>
 
     <mat-card-content>
-      <h4 *ngIf="userType== 'Developer'">Projects bided on:</h4>
-      <h4 *ngIf="userType== 'Client'">Unaccepted Projects:</h4>
+      <h4 *ngIf="userType== 'Developer'">Projects:</h4>
+      <h6 *ngIf="userType== 'Developer'">*if ticked already accepted </h6>
+      <h4 *ngIf="userType== 'Client'">Projects:</h4>
+      <h6 *ngIf="userType== 'Client'">*if ticked already accepted </h6>
+
 
       <mat-accordion #vc *ngIf="!isLoading && posts.length > 0"  multi="false">
         <mat-expansion-panel *ngFor="let post of posts">
           <mat-expansion-panel-header>
             {{ post.title }}
+            <mat-icon style="cursor: pointer;"  *ngIf="post.devId != null">check_circle</mat-icon>
           </mat-expansion-panel-header>
           <div class="post-img">
             <img [src]="post.imgPath" [alt]="post.imgPath">
@@ -54,8 +58,8 @@
             <div class="col-2">
               <div class="payment">
                 <label>Accepted: </label>
-                <!-- <span *ngIf="bid.devId !== null">True</span>
-                <span *ngIf="bid.devId === null">False</span> -->
+                <span *ngIf="post.devId != null">True</span>
+                <span *ngIf="post.devId == null">False</span>
               </div>
               <div class="duration">
                 <label>Duration: </label>
@@ -73,12 +77,57 @@
                   <label>Bid: </label>
                   <span>${{bid.price}}</span>
                 </div>
-                <div class="actions" *ngIf="userType =='Client'">
+                <div class="actions" *ngIf="userType =='Client'  && post.devId == null">
                   <button mat-raised-button color="primary" (click) = "acceptBid(post.id, bid._id, bid.devId)">Accept</button>
                   <button mat-raised-button color="warn" (click) = "declineBid(post.id, bid._id, bid.devId)">Decline</button>
                 </div>
               </mat-card-content>
             </mat-card>
+          </div>
+          <h3> Tasks: </h3>
+          <div class="offers">
+            <hr>
+            <mat-card *ngFor="let task of post.tasks">
+              <mat-card-title>
+                {{task.name}}
+                <mat-icon style="cursor: pointer;"  *ngIf="task.completed == true">done</mat-icon>
+              </mat-card-title>
+              <mat-card-content>
+                <div class="bid-container">
+                  <label>Description: </label>
+                  <span>{{task.description}}</span>
+                </div>
+                <div class="actions" *ngIf="userType =='Developer' && task.completed != true ">
+                  <button mat-raised-button color="primary" (click) = "completeTask(post.id, task._id)">Complete Task</button>
+                </div>
+              </mat-card-content>
+            </mat-card>
+            <mat-action-row *ngIf="userType =='Developer' && post.devId != null">
+              <form
+                [formGroup]="taskform"
+                *ngIf="!isLoading"
+                #postForm="ngForm"
+                (submit)="addTask()">
+                <mat-form-field>
+                  <mat-label>Task Name</mat-label>
+                  <input matInput type="text" formControlName="name" placeholder="Task name">
+                </mat-form-field>
+                <mat-error *ngIf="taskform.get('name').invalid">Please enter name</mat-error>
+                <mat-form-field>
+                  <mat-label>Description</mat-label>
+                  <textarea
+                    [formGroup]="taskform"
+                    matInput
+                    rows="3"
+                    placeholder="Task Descriptionn"
+                    formControlName="description"
+                  >
+                  </textarea>
+                </mat-form-field>
+                <mat-error *ngIf="taskform.get('description').invalid">Please enter description</mat-error>
+                </form>
+              <button mat-raised-button color="primary" (click) = "addTask(post.id)">Add Task</button>
+            </mat-action-row>
           </div>
           <mat-action-row *ngIf="userIsAuthenticated && userId===profileID && userType =='Client'">
             <a [routerLink]="['/edit', post.id]" color="primary" mat-button>EDIT</a>
@@ -88,68 +137,5 @@
       </mat-accordion>
     </mat-card-content>
 
-  </mat-card>
-  <mat-card>
-    <mat-card-content>
-      <h4>Accepted Projects:</h4>
-
-      <mat-accordion #vc *ngIf="!isLoading && posts.length > 0"  multi="false">
-        <mat-expansion-panel *ngFor="let post of posts">
-            <mat-expansion-panel-header>
-              {{ post.title }}
-            </mat-expansion-panel-header>
-            <div class="post-img">
-              <img [src]="post.imgPath" [alt]="post.imgPath">
-            </div>
-            <label style="text-decoration: underline;">Description: </label>
-            <p>
-              {{ post.content }}
-            </p>
-            <div class="rest-info">
-              <div class="col-1">
-                <div class="category1">
-                  <label>Category: </label>
-                  <span>{{post.category}}</span>
-                </div>
-                <div class="category2">
-                  <label>Subcategory: </label>
-                  <span>{{post.subCategory}}</span>
-                </div>
-              </div>
-              <div class="col-2">
-                <div class="payment">
-                  <label>Payment Method: </label>
-                  <span>Milestones</span>
-                </div>
-                <div class="duration">
-                  <label>Duration: </label>
-                  <span>10/6/2020 - 10/1/2021</span>
-                </div>
-              </div>
-            </div>
-            <div class="offers">
-              <hr>
-              <mat-card *ngFor="let bid of post.bids">
-                <mat-card-title> Username <mat-icon style="cursor: pointer;" (click)="goToDev(bid.devId)" color="primary">person</mat-icon></mat-card-title>
-                <mat-card-subtitle> {{bid.devId}}</mat-card-subtitle>
-                <mat-card-content>
-                  <div class="bid-container">
-                    <label>Bid: </label>
-                    <span>${{bid.price}}</span>
-                  </div>
-                  <div class="actions" *ngIf="userType =='Client'">
-                    <button mat-raised-button color="primary" (click) = "acceptBid(post.id, bid._id, bid.devId)">Accept</button>
-                    <button mat-raised-button color="warn" (click) = "declineBid(post.id, bid._id, bid.devId)">Decline</button>
-                  </div>
-                </mat-card-content>
-              </mat-card>
-            </div>
-            <mat-action-row *ngIf="userIsAuthenticated && userId===profileID && userType =='Client'">
-              <a [routerLink]="['/edit', post.id]" color="primary" mat-button>EDIT</a>
-              <button color="warn" mat-button (click)="onDelete(post.id)">DELETE</button>
-            </mat-action-row>
-        </mat-expansion-panel>
-      </mat-accordion>
-    </mat-card-content>
   </mat-card>
 </div>

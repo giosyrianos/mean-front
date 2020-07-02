@@ -7,6 +7,7 @@ import { ActivatedRoute, ParamMap, Router, NavigationEnd } from '@angular/router
 import { Post } from 'src/app/posts/post.model';
 import { map } from 'rxjs/operators';
 import { PostService } from 'src/app/posts/post.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 
 @Component({
@@ -22,8 +23,8 @@ export class ClientComponent implements OnInit, OnDestroy {
   user: any;
   userType: string;
   public posts: any = [];
-  public acceptedPosts: any =[];
   isLoading = false;
+  taskform: FormGroup;
 
   mySubscription: any;
 
@@ -50,6 +51,14 @@ export class ClientComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
+    this.taskform = new FormGroup({
+      name: new FormControl(null, {
+        validators: [Validators.required]
+      }),
+      description: new FormControl(null, {
+        validators: [Validators.required]
+      })
+    });
     this.isLoading = true;
     this.userId = this.authService.getUserId();
     this.userIsAuthenticated = this.authService.getIsAuth();
@@ -68,6 +77,20 @@ export class ClientComponent implements OnInit, OnDestroy {
     return this.postsListUpdated.asObservable();
   }
   
+  addTask(postID: string){
+    if (this.taskform.invalid) {
+      return;
+    }
+    if (!this.taskform.invalid) {
+      this.userId = this.authService.getUserId()
+      this.postService.addTask(postID, this.taskform.value.name, this.taskform.value.description );
+    }
+  }
+
+  completeTask(postId: string, taskId: string){
+    this.userId = this.authService.getUserId()
+    this.postService.completeTask(postId, taskId)
+  }
 
   getUserData(userID: string) {
     this.isLoading = true;
@@ -96,7 +119,9 @@ export class ClientComponent implements OnInit, OnDestroy {
                   owner: post.basicFields.ownerId,
                   category: post.basicFields.category,
                   subCategory: post.basicFields.subCategory,
-                  bids: post.bids
+                  bids: post.bids,
+                  devId: post.devId,
+                  tasks: post.tasks
                 };
               }),
             };
@@ -125,7 +150,9 @@ export class ClientComponent implements OnInit, OnDestroy {
                   owner: post.basicFields.ownerId,
                   category: post.basicFields.category,
                   subCategory: post.basicFields.subCategory,
-                  bids: post.bids
+                  bids: post.bids,
+                  devId: post.devId,
+                  tasks: post.tasks
                 };
               }),
             };

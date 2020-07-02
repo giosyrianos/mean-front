@@ -127,7 +127,7 @@ export class PostService {
       devId: userid,
       price
     };
-    console.log(bidData);
+    console.log("data" ,bidData);
     this.http.post('http://localhost:3000/api/posts/bid', bidData)
       .subscribe(response => {
         this.router.navigate(['/profile/'+ userID]);
@@ -161,6 +161,29 @@ export class PostService {
     });
   }
 
+  addTask(postid: string, name: string, description: string) {
+    const data = {
+      postId: postid,
+      name: name,
+      description: description
+    }
+    console.log("data", data)
+    this.http.post('http://localhost:3000/api/posts/tasks', data)
+    .subscribe(response => {
+      this.router.navigate(['/']);
+    });
+  }
+
+  completeTask(postid: string, taskid: string){
+    const data ={
+      postId: postid,
+      taskId: taskid
+    }
+    this.http.put('http://localhost:3000/api/posts/tasks/complete', data)
+    .subscribe(response => {
+      this.router.navigate(['/']);
+    });
+  }
 
 
   deletePost(postId: string) {
