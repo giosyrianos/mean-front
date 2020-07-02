@@ -15,6 +15,7 @@ export class AppComponent implements OnInit{
   postList: Post[] = [];
   showFiller = false;
   isClient = false;
+  userType: string;
   constructor(
     private authService: AuthService
   ) { }
