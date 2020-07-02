@@ -24,11 +24,11 @@ export class PostCreateComponent implements OnInit {
   isLoading = false;
   form: FormGroup;
   imgPreview: string;
-  category = ''
-  subCategory = ''
+  category = '';
+  subCategory = '';
 
-  categories = ["Web Design","Web app","Application","Game"]
-  subCategories = ["Design","Develop", "SEO", "Performance"]
+  categories = ['Web Design', 'Web app', 'Application', 'Game'];
+  subCategories = ['Design', 'Develop', 'SEO', 'Performance'];
 
   selectedCategory = new FormControl();
   selectedSubCategory = new FormControl();
@@ -60,7 +60,7 @@ export class PostCreateComponent implements OnInit {
         this.postId = paramMap.get('postId');
         this.isLoading = true;
         this.postService.getPost(this.postId).subscribe(postData => {
-          console.log(postData)
+          console.log(postData);
           this.isLoading = false;
           const post = {
             id: postData._id,
@@ -71,14 +71,14 @@ export class PostCreateComponent implements OnInit {
             category: postData.basicFields.category,
             subCategory: postData.basicFields.subCategory
           };
-          console.log(post)
+          console.log(post);
           this.form.setValue({
             title: post.title,
             content: post.content,
             image: post.imgPath,
           });
-          this.selectedCategory.setValue(post.category)
-          this.selectedSubCategory.setValue(post.subCategory)
+          this.selectedCategory.setValue(post.category);
+          this.selectedSubCategory.setValue(post.subCategory);
         });
       } else {
         this.mode = 'create';
@@ -125,17 +125,18 @@ export class PostCreateComponent implements OnInit {
       this.form.reset();
     } else {
       this.ownerId = this.authService.getUserId();
-      this.postService.updatePost(
-        this.postId,
-        this.form.value.title,
-        this.form.value.content,
-        this.form.value.image,
-        this.selectedCategory.value,
-        this.selectedSubCategory.value,
-        this.ownerId
-      );
+      console.log(this.ownerId);
+      // this.postService.updatePost(
+      //   this.postId,
+      //   this.form.value.title,
+      //   this.form.value.content,
+      //   this.form.value.image,
+      //   this.selectedCategory.value,
+      //   this.selectedSubCategory.value,
+      //   this.ownerId
+      // );
     }
-    console.log('worked')
+    console.log('worked');
   }
 
 }
