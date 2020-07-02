@@ -61,11 +61,13 @@ export class PostListComponent implements OnInit, OnDestroy {
 
 
   declineBid(postid: string, bidid: string, devid: string) {
-    this.postService.declineBid(postid, bidid, devid);
+    this.userId = this.authService.getUserId()
+    this.postService.declineBid(postid, bidid, devid, this.userId);
   }
 
   acceptBid(postid: string, bidid: string, devid: string) {
-    this.postService.acceptBid(postid, bidid, devid);
+    this.userId = this.authService.getUserId()
+    this.postService.acceptBid(postid, bidid, devid, this.userId);
   }
 
   makeBid(postid: string) {
