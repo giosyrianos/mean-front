@@ -15,11 +15,14 @@ export class EditUserComponent implements OnInit {
   authListenerSubs: Subscription;
   userIsAuthenticated = false;
   userId: string;
+  userType: string;
   user: any;
   profileID: string;
   isLoading = false;
   form: FormGroup;
   imgPreview: string;
+  skills = []
+  skillTags: string [] = ['CSS', 'HTML', 'PYTHON', 'WEB-DESIGN', 'WEB-DEV', 'JAVASCRIPT', 'JAVA']
 
   constructor(
     private userService: UserService,
@@ -31,6 +34,7 @@ export class EditUserComponent implements OnInit {
   ngOnInit() {
     this.isLoading = true;
     this.profileID = this.authService.getUserId();
+    this.userType = this.authService.getUserType();
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authListenerSubs = this.authService.getAuthStatusListener()
     .subscribe(isAuthenticated => {
@@ -48,6 +52,8 @@ export class EditUserComponent implements OnInit {
       this.isLoading = false;
       this.user = userData;
       this.initializeForm();
+      this.form.patchValue({skills: userData.skillTags})
+      this.skills = this.user.skillTags
     });
   }
 
@@ -61,7 +67,7 @@ export class EditUserComponent implements OnInit {
       surname: new FormControl(this.user.subUserFields.surname, {}),
       description: new FormControl(this.user.description, {}),
       // password: new FormControl('', [Validators.required,Validators.minLength(6)]),
-      skills: new FormControl([]),
+      skills: new FormControl(this.user.skills,[]),
       image: new FormControl(this.user.subUserFields.imgPath, {
         validators: [Validators.required],
         asyncValidators: [mimeType]
@@ -91,9 +97,17 @@ export class EditUserComponent implements OnInit {
       return;
     }
     this.userId = this.authService.getUserId()
+    this.form.patchValue({ skills : this.skills})
     this.isLoading = true;
     console.log(this.form.value);
-    this.userService.updateUser(this.userId, this.form.value);
-    
+    this.userService.updateUser(this.userId, this.form.value); 
+  }
+  show(skill){
+    if (this.skills.includes(skill)){
+      this.skills = this.skills.filter(function(skil){return skil != skill})
+    }else{
+      this.skills.push(skill)
+    }
+    console.log(this.skills)
   }
 }

@@ -44,6 +44,19 @@
         <textarea rows="4" formControlName ="description" matInput placeholder="Desc" [value]="user.description"> </textarea>
       </mat-form-field>
     </div>
+    <div class="container" *ngIf="userType === 'Developer' ">
+      <h3>Skill Tags:</h3>
+      <mat-selection-list>
+        <div *ngFor="let skill of skillTags">
+          <mat-list-option  *ngIf="user.skillTags.includes(skill)"  selected="true" (click) = "show(skill)">
+            {{skill}}
+          </mat-list-option>
+          <mat-list-option  *ngIf="!user.skillTags.includes(skill)" (click) = "show(skill)">
+            {{skill}}
+          </mat-list-option>
+        </div>
+      </mat-selection-list>
+    </div>
 <!-- 
     <div class="row4">
       <mat-form-field>

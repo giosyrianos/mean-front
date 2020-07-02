@@ -22,7 +22,16 @@
         <label>email: </label>
         {{ user.userFields.email }}
       </mat-card-subtitle>
+      <mat-card-subtitle *ngIf="userType === 'Developer'">
+        Skills:
+        <ul>
+          <li *ngFor="let skill of user.skillTags">
+            {{ skill }}
+          </li>
+        </ul>
+      </mat-card-subtitle>
     </mat-card-header>
+
 
     <mat-card-content>
       <h4 *ngIf="userType== 'Developer'">Projects:</h4>
@@ -34,7 +43,7 @@
       <mat-accordion #vc *ngIf="!isLoading && posts.length > 0"  multi="false">
         <mat-expansion-panel *ngFor="let post of posts">
           <mat-expansion-panel-header>
-            {{ post.title }}
+            {{ post.title }} <span *ngIf="post.owner == userId"> {{ post.bids.length }}  </span>
             <mat-icon style="cursor: pointer;"  *ngIf="post.devId != null">check_circle</mat-icon>
           </mat-expansion-panel-header>
           <div class="post-img">
