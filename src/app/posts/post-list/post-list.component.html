@@ -35,6 +35,15 @@
         </div>
       </div>
     </div>
+    <div class= "skill-tags" *ngIf="post.rectags.length > 0">
+      <label >
+        Recommended skills: 
+      </label>
+      <span *ngFor="let skill of post.rectags">
+        {{skill}}
+      </span>
+
+    </div>
     <div class="offers">
       <hr>
       <mat-card *ngFor="let bid of post.bids">
