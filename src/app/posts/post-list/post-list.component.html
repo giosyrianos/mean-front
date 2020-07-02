@@ -1,8 +1,12 @@
 <div class="list-container">
 
 <mat-spinner *ngIf="isLoading"></mat-spinner>
+<div>
+  <input type="text" class="form-control" placeholder="Search By category"
+  style="width: 300px;" [(ngModel)]="searchTerm" />
+</div>
   <mat-accordion *ngIf="!isLoading && posts.length > 0"  multi="false">
-  <mat-expansion-panel *ngFor="let post of posts">
+  <mat-expansion-panel *ngFor="let post of filteredPosts">
     <mat-expansion-panel-header>
       {{ post.title }}
     </mat-expansion-panel-header>

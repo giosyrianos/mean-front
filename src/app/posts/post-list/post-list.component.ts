@@ -16,6 +16,24 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class PostListComponent implements OnInit, OnDestroy {
 
   public posts: Post[] = [];
+
+  public filteredPosts: Post[] = [];
+  private _searchTerm: string;
+  get searchTerm(): string{
+    return this._searchTerm
+  }
+
+  set searchTerm(value: string){
+    this._searchTerm = value
+    this.filteredPosts = this.filterePosts(value)
+  }
+
+  filterePosts(searchString: string) {
+    return this.posts.filter( post =>
+      post.category.toLowerCase().indexOf(searchString.toLowerCase()) !== -1)
+  }
+
+
   private postsSub: Subscription;
   private authStatusSup: Subscription;
   public userIsAuthenticated = false;
@@ -51,6 +69,7 @@ export class PostListComponent implements OnInit, OnDestroy {
       .subscribe((postData: {posts: Post[], postCount: number}) => {
         this.isLoading = false;
         this.posts = postData.posts;
+        this.filteredPosts = this.posts;
         this.totalPosts = postData.postCount;
       });
     this.userIsAuthenticated = this.authService.getIsAuth();
