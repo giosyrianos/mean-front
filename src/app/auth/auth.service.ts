@@ -93,6 +93,7 @@ export class AuthService {
           this.setAuhtTimer(expiresInDuration);
           this.isAuthenticated = true;
           this.userId = response.userId;
+          this.userType = response.userType;
           this.userTypeListener.next(response.userType);
           this.authStatusListener.next(true);
           const now = new Date();
