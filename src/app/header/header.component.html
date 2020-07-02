@@ -2,9 +2,15 @@
   <button (click)="getMenu()" mat-icon-button color="accent">
     <mat-icon>menu</mat-icon>
   </button>
-  <span>
-    <a routerLink="/">Browse Project</a>
-  </span>
+  <ul>
+    <li>
+      <a routerLink="/">Browse Project</a>
+    </li>
+    
+    <li *ngIf="userType == 'admin' && userIsAuthenticated">
+      <a routerLink="/users">Browse Users</a>
+    </li>
+  </ul>
   <span class="spacer"></span>
   <ul>
     <!-- <li *ngIf="userIsAuthenticated">
@@ -19,7 +25,7 @@
     <li *ngIf="userIsAuthenticated">
       <button (click)="onLogout()" mat-button routerLinkActive="mat-accent">Logout</button>
     </li>
-    <li class="avatar"[routerLink]="'/profile/' + userId"  *ngIf="userIsAuthenticated">
+    <li class="avatar"[routerLink]="'/profile/' + userId"  *ngIf="userIsAuthenticated && userType != 'admin'">
       <mat-icon style="font-size: 35px;" matBadge="15" matBadgeColor="warn">person</mat-icon>
     </li>
   </ul>

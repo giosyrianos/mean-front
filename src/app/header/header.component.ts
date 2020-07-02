@@ -12,6 +12,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   authListenerSubs: Subscription;
   userIsAuthenticated = false;
   userId: string
+  userType: string
 
   @Output() menuToggle = new EventEmitter();
 
@@ -20,6 +21,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.userId = this.authService.getUserId();
+    this.userType = this.authService.getUserType();
     this.authListenerSubs = this.authService.getAuthStatusListener()
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;

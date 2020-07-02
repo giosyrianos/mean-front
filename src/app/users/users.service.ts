@@ -39,12 +39,16 @@ export class UserService{
   }
 
   getDevPosts(id: string) {
-    console.log(id)
     return this.http.get(`http://localhost:3000/api/user/posts/${id}`);
   }
 
   getUsers(){
     return this.http.get('http://localhost:3000/api/user/')
+  }
+
+  deleteUser(userid: string){
+    console.log(userid)
+    return this.http.delete(`http://localhost:3000/api/user/deleteUser/${userid}`)
   }
 
   updateUser(userID:string , newData: any) {

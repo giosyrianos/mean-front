@@ -104,11 +104,18 @@
           <input
             matInput formControlName="lastname" placeholder="First Name - Last Name">
         </mat-form-field>
+        <div class="container">
+          <h3>Skill Tags:</h3>
+          <mat-selection-list>
+            <mat-list-option *ngFor="let skill of skillTags" (click) = "show(skill)">
+              {{skill}}
+            </mat-list-option>
+          </mat-selection-list>
+        </div>
         <div>
           <button mat-fab color="primary" type="button" (click)="filePicker.click()"><mat-icon>person</mat-icon></button>
           <input type="file" #filePicker (change)="onFileImported($event)">
         </div>
-
         <div
         class="img-preview"
         *ngIf="imgPreview !== '' && imgPreview && secondFormGroup.get('image').valid">

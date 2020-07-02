@@ -18,6 +18,8 @@ export class SignupComponent implements OnInit, OnDestroy {
   secondFormGroup: FormGroup;
   isEditable = false;
   userType = '';
+  skills = []
+  skillTags: string [] = ['CSS', 'HTML', 'PYTHON', 'WEB-DESIGN', 'WEB-DEV', 'JAVASCRIPT', 'JAVA']
 
   selectedRole = new FormControl();
   imgPreview: string;
@@ -42,7 +44,7 @@ export class SignupComponent implements OnInit, OnDestroy {
     this.secondFormGroup = this.formBuilder.group({
       firstname: [''],
       lastname: [''],
-      skills: [''],
+      selectedSkills: [''],
       image: new FormControl(null, {
         validators: [Validators.required],
         asyncValidators: [mimeType]
@@ -50,11 +52,17 @@ export class SignupComponent implements OnInit, OnDestroy {
     });
 
   }
-
+  show(skill){
+    if (this.skills.includes(skill)){
+      this.skills = this.skills.filter(function(skil){return skil != skill})
+    }else{
+      this.skills.push(skill)
+    }
+    console.log(this.skills)
+  }
   getSelection() {
     this.userType = this.selectedRole.value;
   }
-
 
   signUp(formData: NgForm) {
     if (formData.invalid) {
@@ -85,10 +93,12 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   submitForm() {
     this.firstFormGroup.patchValue({ userType: this.userType });
+    this.secondFormGroup.patchValue({ selectedSkills: this.skills})
       // console.log('first:', this.firstFormGroup.value);
       // console.log('second:', this.secondFormGroup.value);
     const newUserData = { ...this.firstFormGroup.value, ...this.secondFormGroup.value };
     console.log('from Angular:', newUserData);
+
     this.authService.createUser2(newUserData);
   }
 
