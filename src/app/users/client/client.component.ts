@@ -21,6 +21,7 @@ export class ClientComponent implements OnInit, OnDestroy {
   user: any;
   userType: string;
   public posts: any = [];
+  public acceptedPosts: any =[];
   isLoading = false;
 
   mySubscription: any;
@@ -64,6 +65,7 @@ export class ClientComponent implements OnInit, OnDestroy {
   updatePostsListener() {
     return this.postsListUpdated.asObservable();
   }
+  
 
   getUserData(userID: string) {
     this.isLoading = true;
@@ -84,7 +86,7 @@ export class ClientComponent implements OnInit, OnDestroy {
           map((postData: any) => {
             return {
               posts: postData.map(post => {
-                return {
+                let newPost = {
                   title: post.basicFields.title,
                   content: post.basicFields.description,
                   id: post._id,
@@ -94,6 +96,11 @@ export class ClientComponent implements OnInit, OnDestroy {
                   subCategory: post.basicFields.subCategory,
                   bids: post.bids
                 };
+                console.log(post.devId)
+                if (post.devId != null){
+                  this.acceptedPosts.push(newPost)
+                }
+                return newPost
               }),
             };
           })
@@ -113,7 +120,7 @@ export class ClientComponent implements OnInit, OnDestroy {
             console.log(postData)
             return {
               posts: postData.data.map(post => {
-                return {
+                let newPost = {
                   title: post.basicFields.title,
                   content: post.basicFields.description,
                   id: post._id,
@@ -123,6 +130,11 @@ export class ClientComponent implements OnInit, OnDestroy {
                   subCategory: post.basicFields.subCategory,
                   bids: post.bids
                 };
+                console.log(post.devId)
+                if (post.devId != null){
+                  this.acceptedPosts.push(newPost)
+                }
+                return newPost
               }),
             };
           })
