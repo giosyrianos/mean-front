@@ -2,8 +2,9 @@
   <mat-drawer-container>
     <mat-drawer #drawer class="sidenav" mode="side">
       <button
-        *ngIf="userIsAuthenticated && userType =='Client'" mat-raised-button routerLink="/create" routerLinkActive="mat-accent">New Post
+        *ngIf="userIsAuthenticated && isClient" mat-raised-button routerLink="/create" routerLinkActive="mat-accent">New Post
       </button>
+     <!-- <button (click)="show()">clik</button> -->
       <!-- <button
         *ngIf="!userIsAuthenticated"
         routerLink="/login" mat-raised-button

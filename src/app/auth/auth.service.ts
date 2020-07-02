@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   private token: string;
   private authStatusListener = new Subject<boolean>();
+  private userTypeListener = new Subject<string>();
   private tokenTimer: any;
   private userId: string;
   private userType: string;
@@ -40,7 +41,11 @@ export class AuthService {
 
   getAuthStatusListener() {
     return this.authStatusListener.asObservable();
-   }
+  }
+
+  getUserTypeListener() {
+    return this.userTypeListener.asObservable();
+  }
 
   createUser(email: string, password: string, userType: string) {
     const authData: AuthData = {
@@ -80,6 +85,7 @@ export class AuthService {
     this.http.post<{ token: string, expiresIn: number, userId: string, userType: string }>('http://localhost:3000/api/user/login', authData)
       .subscribe(response => {
         console.log(response.userType);
+        this.userTypeListener.next(response.userType);
         const token = response.token;
         this.token = token;
         if (token) {
@@ -87,7 +93,7 @@ export class AuthService {
           this.setAuhtTimer(expiresInDuration);
           this.isAuthenticated = true;
           this.userId = response.userId;
-          this.userType = response.userType;
+          this.userTypeListener.next(response.userType);
           this.authStatusListener.next(true);
           const now = new Date();
           const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
@@ -104,6 +110,7 @@ export class AuthService {
     this.token = null;
     this.isAuthenticated = false;
     this.authStatusListener.next(false);
+    this.userTypeListener.next(null);
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
     this.router.navigate(['/']);
@@ -125,6 +132,7 @@ export class AuthService {
       this.userType = authInfo.userType;
       this.setAuhtTimer(expiresIn / 1000);
       this.authStatusListener.next(true);
+      this.userTypeListener.next(authInfo.userType);
     }
   }
 

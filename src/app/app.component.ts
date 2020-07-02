@@ -8,13 +8,15 @@ import { Subscription } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   authListenerSubs: Subscription;
+  typeListenerSubs: Subscription;
   userIsAuthenticated = false;
   title = 'mean-app';
   postList: Post[] = [];
   showFiller = false;
   isClient = false;
+  type: any;
   constructor(
     private authService: AuthService
   ) { }
@@ -22,19 +24,26 @@ export class AppComponent implements OnInit{
   ngOnInit() {
     this.authService.autoAuthUser();
     this.userIsAuthenticated = this.authService.getIsAuth();
-    if (this.userIsAuthenticated){
-      if (this.authService.getUserType() != 'Client'){
-        this.userIsAuthenticated = false;
-      }
+    if (this.userIsAuthenticated) {
+      this.type = this.authService.getUserType();
+      // if (this.authService.getUserType() != 'Client') {
+      this.isClient = this.type === 'Client';
+      this.userIsAuthenticated = true;
+      // }
     }
     this.authListenerSubs = this.authService.getAuthStatusListener()
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
       });
+    this.typeListenerSubs = this.authService.getUserTypeListener()
+      .subscribe(userType => {
+        this.type = userType;
+        this.isClient = userType === 'Client';
+      });
   }
 
-  le() {
-    console.log('works')
+  show() {
+    console.log('works:', this.type);
   }
 
 
