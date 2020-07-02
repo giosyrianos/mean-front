@@ -88,7 +88,7 @@ export class ClientComponent implements OnInit, OnDestroy {
           map((postData: any) => {
             return {
               posts: postData.map(post => {
-                let newPost = {
+                return {
                   title: post.basicFields.title,
                   content: post.basicFields.description,
                   id: post._id,
@@ -98,11 +98,6 @@ export class ClientComponent implements OnInit, OnDestroy {
                   subCategory: post.basicFields.subCategory,
                   bids: post.bids
                 };
-                console.log(post.devId)
-                if (post.devId != null){
-                  this.acceptedPosts.push(newPost)
-                }
-                return newPost
               }),
             };
           })
@@ -122,7 +117,7 @@ export class ClientComponent implements OnInit, OnDestroy {
             console.log(postData)
             return {
               posts: postData.data.map(post => {
-                let newPost = {
+                return {
                   title: post.basicFields.title,
                   content: post.basicFields.description,
                   id: post._id,
@@ -132,11 +127,6 @@ export class ClientComponent implements OnInit, OnDestroy {
                   subCategory: post.basicFields.subCategory,
                   bids: post.bids
                 };
-                console.log(post.devId)
-                if (post.devId != null){
-                  this.acceptedPosts.push(newPost)
-                }
-                return newPost
               }),
             };
           })
@@ -157,7 +147,6 @@ export class ClientComponent implements OnInit, OnDestroy {
   }
 
   declineBid(postid: string, bidid: string, devid: string){
-    console.log("gere")
     this.postService.declineBid(postid, bidid, devid)
     // console.log(postid);
   }
