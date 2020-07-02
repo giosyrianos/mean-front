@@ -18,13 +18,24 @@ export class PostListComponent implements OnInit, OnDestroy {
   public posts: Post[] = [];
 
   public filteredPosts: Post[] = [];
-  private _searchTerm: string;
-  get searchTerm(): string{
-    return this._searchTerm
+  private _searchCatTerm: string;
+  private _searchTagTerm: string;
+
+  // get searchTagTerm(): string{
+  //   return this._searchTagTerm
+  // }
+
+  // set searchTagTerm(value: string){
+  //   this._searchTagTerm = value
+  //   this.filteredPosts = this.filtereTagPosts(value)
+  // }
+
+  get searchCatTerm(): string{
+    return this._searchCatTerm
   }
 
-  set searchTerm(value: string){
-    this._searchTerm = value
+  set searchCatTerm(value: string){
+    this._searchCatTerm = value
     this.filteredPosts = this.filterePosts(value)
   }
 
@@ -33,6 +44,13 @@ export class PostListComponent implements OnInit, OnDestroy {
       post.category.toLowerCase().indexOf(searchString.toLowerCase()) !== -1)
   }
 
+  // filtereTagPosts(searchString: string) {
+  //   return this.posts.filter( post =>{
+  //     for(var i in post.tags){
+  //       post.tags[i].toLowerCase().indexOf(searchString.toLowerCase()) !== -1
+  //     }
+  //   })
+  // }
 
   private postsSub: Subscription;
   private authStatusSup: Subscription;

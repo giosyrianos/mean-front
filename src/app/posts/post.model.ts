@@ -11,4 +11,5 @@ export  interface Post {
   tasks?: any[];
   completed: boolean;
   commented: boolean;
+  tags: any[]
 }
