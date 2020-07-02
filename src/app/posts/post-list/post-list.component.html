@@ -45,7 +45,7 @@
             <label>Bid: </label>
             <span>${{bid.price}}</span>
           </div>
-          <div class="actions" *ngIf="isClient">
+          <div class="actions" *ngIf="isClient && userId===post.owner">
             <button mat-raised-button color="primary" (click) = 'acceptBid(post.id, bid._id, bid.devId)'>Accept</button>
             <button mat-raised-button color="warn" (click) = 'declineBid(post.id, bid._id, bid.devId)'>Decline</button>
           </div>

@@ -87,32 +87,38 @@ export class PostService {
       });
   }
 
-  updatePost(id: string, title: string, content: string, image: File | string, category: string, subCategory) {
-    let postData: Post | FormData;
+  updatePost(id: string, title: string, content: string, image: File | string, category: string, subCategory: string, ownerId:string) {
+    // var postData: Post | FormData;
     if (typeof image === 'object') {
-      postData = new FormData();
+      const postData = new FormData();
       postData.append('id', id);
       postData.append('title', title);
       postData.append('content', content);
       postData.append('image', image, title);
       postData.append('category', category);
       postData.append('subCategory', subCategory);
-    } else {
-      postData = {
-        id,
-        title,
-        content,
-        imgPath: image,
-        owner: null,
-        category,
-        subCategory
-      };
-    }
-    this.http
+      postData.append('owner', ownerId);
+      this.http
       .put('http://localhost:3000/api/posts/' + id, postData)
       .subscribe(response => {
         this.router.navigate(['/']);
       });
+    } else {
+      const postData = {
+        id,
+        title,
+        content,
+        imgPath: image,
+        owner: ownerId,
+        category,
+        subCategory
+      };
+      this.http
+      .put('http://localhost:3000/api/posts/' + id, postData)
+      .subscribe(response => {
+        this.router.navigate(['/']);
+      });
+    }
   }
 
   putBid(postid: string, userid: string, price: number) {
@@ -122,7 +128,7 @@ export class PostService {
       price
     };
     console.log(bidData);
-    this.http.post('http://localhost:3000/api/posts/bid', bidData)
+    this.http.post<{message: string}>('http://localhost:3000/api/posts/bid', bidData)
       .subscribe(response => {
         this.router.navigate(['/']);
       });

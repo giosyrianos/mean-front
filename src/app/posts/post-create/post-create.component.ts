@@ -124,13 +124,15 @@ export class PostCreateComponent implements OnInit {
       );
       this.form.reset();
     } else {
+      this.ownerId = this.authService.getUserId();
       this.postService.updatePost(
         this.postId,
         this.form.value.title,
         this.form.value.content,
         this.form.value.image,
-        this.form.value.category,
-        this.form.value.subCategory
+        this.selectedCategory.value,
+        this.selectedSubCategory.value,
+        this.ownerId
       );
     }
     console.log('worked')
