@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
-
+import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { Subscription } from 'rxjs';
 
@@ -29,7 +29,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   getMenu() {
     this.menuToggle.emit();
   }
-
   onLogout() {
     this.authService.logout();
   }

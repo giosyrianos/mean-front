@@ -212,12 +212,6 @@ export class PostService {
 
 
   deletePost(postId: string) {
-    return this.http.delete(`http://localhost:3000/api/posts/${postId}`);
-      // .subscribe((msg) => {
-      //   console.log(msg);
-      //   const newPostList = this.posts.filter(post => post.id !== postId);
-      //   this.posts = newPostList;
-      //   this.postsListUpdated.next([...this.posts]);
-      // });
+    return this.http.delete(`http://localhost:3000/api/posts/${postId}`)
   }
 }

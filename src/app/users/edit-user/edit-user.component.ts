@@ -60,7 +60,7 @@ export class EditUserComponent implements OnInit {
       name: new FormControl(this.user.subUserFields.name, {}),
       surname: new FormControl(this.user.subUserFields.surname, {}),
       description: new FormControl(this.user.description, {}),
-      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      // password: new FormControl('', [Validators.required,Validators.minLength(6)]),
       skills: new FormControl([]),
       image: new FormControl(this.user.subUserFields.imgPath, {
         validators: [Validators.required],
