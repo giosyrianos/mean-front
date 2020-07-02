@@ -134,7 +134,7 @@ export class PostService {
       });
   }
 
-  acceptBid(postid: string, bidid: string, devid: string) {
+  acceptBid(postid: string, bidid: string, devid: string, userid: string) {
     const data = {
       postId: postid,
       bidId: bidid,
@@ -144,11 +144,11 @@ export class PostService {
     this.http.put('http://localhost:3000/api/posts/bid/accept', data)
     .subscribe(response => {
       console.log(response)
-      this.router.navigate(['/']);
+      this.router.navigate(['/profile/' + userid]);
     });
   }
 
-  declineBid(postid: string, bidid: string, devid: string) {
+  declineBid(postid: string, bidid: string, devid: string, userid: string) {
     const data = {
       postId: postid,
       bidId: bidid,
@@ -157,11 +157,11 @@ export class PostService {
     console.log("data",data);
     this.http.put('http://localhost:3000/api/posts/bid/decline', data)
     .subscribe(response => {
-      this.router.navigate(['/']);
+      this.router.navigate(['/profile/' + userid]);
     });
   }
 
-  addTask(postid: string, name: string, description: string) {
+  addTask(postid: string, name: string, description: string, userid: string) {
     const data = {
       postId: postid,
       name: name,
@@ -170,28 +170,28 @@ export class PostService {
     console.log("data", data)
     this.http.post('http://localhost:3000/api/posts/tasks', data)
     .subscribe(response => {
-      this.router.navigate(['/']);
+      this.router.navigate(['/profile/' + userid]);
     });
   }
 
-  completeTask(postid: string, taskid: string){
+  completeTask(postid: string, taskid: string, userid: string){
     const data ={
       postId: postid,
       taskId: taskid
     }
     this.http.put('http://localhost:3000/api/posts/tasks/complete', data)
     .subscribe(response => {
-      this.router.navigate(['/']);
+      this.router.navigate(['/profile/'+ userid]);
     });
   }
 
-  completePost(postId: string){
+  completePost(postId: string, userid: string){
     const data = {
       postId: postId
     }
     this.http.put('http://localhost:3000/api/posts/set/complete', data)
     .subscribe(response => {
-      this.router.navigate(['/']);
+      this.router.navigate(['/profile/' + userid]);
     });
   }
 

@@ -138,13 +138,13 @@ export class ClientComponent implements OnInit, OnDestroy {
     }
     if (!this.taskform.invalid) {
       this.userId = this.authService.getUserId()
-      this.postService.addTask(postID, this.taskform.value.name, this.taskform.value.description );
+      this.postService.addTask(postID, this.taskform.value.name, this.taskform.value.description, this.userId );
     }
   }
 
   completeTask(postId: string, taskId: string){
     this.userId = this.authService.getUserId()
-    this.postService.completeTask(postId, taskId)
+    this.postService.completeTask(postId, taskId, this.userId)
   }
 
   getUserData(userID: string) {
@@ -234,17 +234,20 @@ export class ClientComponent implements OnInit, OnDestroy {
 
   submitCompletition(postId: string){
     console.log(postId)
-    this.postService.completePost(postId);
+    this.userId = this.authService.getUserId()
+    this.postService.completePost(postId, this.userId);
   }
 
   declineBid(postid: string, bidid: string, devid: string){
-    this.postService.declineBid(postid, bidid, devid)
+    this.userId = this.authService.getUserId()
+    this.postService.declineBid(postid, bidid, devid, this.userId)
     // console.log(postid);
   }
 
   acceptBid(postid: string, bidid: string, devid: string){
     // console.log(postid);
-    this.postService.acceptBid(postid, bidid, devid)
+    this.userId = this.authService.getUserId()
+    this.postService.acceptBid(postid, bidid, devid, this.userId)
   }
 
   onDelete(id) {

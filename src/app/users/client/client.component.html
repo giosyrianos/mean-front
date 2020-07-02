@@ -78,9 +78,10 @@
                   <label>Bid: </label>
                   <span>${{bid.price}}</span>
                 </div>
-                <div class="actions" *ngIf="userType =='Client'  && post.devId == null">
-                  <button mat-raised-button color="primary" (click) = "acceptBid(post.id, bid._id, bid.devId)">Accept</button>
-                  <button mat-raised-button color="warn" (click) = "declineBid(post.id, bid._id, bid.devId)">Decline</button>
+                <div class="actions" *ngIf="userType =='Client' ">
+                  <button mat-raised-button color="primary" *ngIf="post.devId == null" (click) = "acceptBid(post.id, bid._id, bid.devId)">Accept</button>
+                  <button mat-raised-button color="warn" *ngIf="post.devId == null" (click) = "declineBid(post.id, bid._id, bid.devId)">Decline</button>
+                  <p *ngIf="post.devId != null && post.devId == bid.devId">Winner</p>
                 </div>
               </mat-card-content>
             </mat-card>
@@ -164,7 +165,7 @@
         </mat-expansion-panel>
       </mat-accordion>
 
-      <h4>Comments:</h4>
+      <h4 *ngIf="userType == 'Developer'">Comments:</h4>
       <mat-accordion #vc *ngIf="!isLoading && devComments.length > 0"  multi="false">
         <mat-expansion-panel *ngFor="let comment of devComments">
           <mat-expansion-panel-header>
