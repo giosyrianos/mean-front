@@ -2,8 +2,11 @@
 
 <mat-spinner *ngIf="isLoading"></mat-spinner>
 <div>
-  <input type="text" class="form-control" placeholder="Search By category"
-  style="width: 300px;" [(ngModel)]="searchCatTerm" />
+      <mat-label>
+        Search for category
+      </mat-label>
+        <input  type="text" class="form-control" 
+        style="width: 300px;" [(ngModel)]="searchCatTerm" />
 </div>
 <!-- <div>
   <input type="text" class="form-control" placeholder="Search By Tag"
