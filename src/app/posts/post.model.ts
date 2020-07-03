@@ -5,12 +5,12 @@ export  interface Post {
   imgPath: string;
   owner: string;
   bids?: any[];
-  category: string;
-  subCategory: string;
+  category?: string;
+  subCategory?: string;
   devId?: string;
   tasks?: any[];
-  completed: boolean;
-  commented: boolean;
-  tags: any[];
-  rectags: any[];
+  completed?: boolean;
+  commented?: boolean;
+  tags?: any[];
+  rectags?: any[];
 }
