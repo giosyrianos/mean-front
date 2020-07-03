@@ -46,9 +46,10 @@ export class UserService{
     return this.http.get('http://localhost:3000/api/user/')
   }
 
-  deleteUser(userid: string){
-    console.log(userid)
-    return this.http.delete(`http://localhost:3000/api/user/deleteUser/${userid}`)
+  deleteUser(id: string){
+    return this.http.delete(`http://localhost:3000/api/user/${id}`).subscribe((data) => {
+      this.router.navigate(['/'])
+    })
   }
 
   updateUser(userID:string , newData: any) {
