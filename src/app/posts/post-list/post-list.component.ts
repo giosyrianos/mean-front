@@ -16,6 +16,42 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class PostListComponent implements OnInit, OnDestroy {
 
   public posts: Post[] = [];
+
+  public filteredPosts: Post[] = [];
+  private _searchCatTerm: string;
+  private _searchTagTerm: string;
+
+  // get searchTagTerm(): string{
+  //   return this._searchTagTerm
+  // }
+
+  // set searchTagTerm(value: string){
+  //   this._searchTagTerm = value
+  //   this.filteredPosts = this.filtereTagPosts(value)
+  // }
+
+  get searchCatTerm(): string{
+    return this._searchCatTerm
+  }
+
+  set searchCatTerm(value: string){
+    this._searchCatTerm = value
+    this.filteredPosts = this.filterePosts(value)
+  }
+
+  filterePosts(searchString: string) {
+    return this.posts.filter( post =>
+      post.category.toLowerCase().indexOf(searchString.toLowerCase()) !== -1)
+  }
+
+  // filtereTagPosts(searchString: string) {
+  //   return this.posts.filter( post =>{
+  //     for(var i in post.tags){
+  //       post.tags[i].toLowerCase().indexOf(searchString.toLowerCase()) !== -1
+  //     }
+  //   })
+  // }
+
   private postsSub: Subscription;
   private authStatusSup: Subscription;
   public userIsAuthenticated = false;
@@ -51,6 +87,7 @@ export class PostListComponent implements OnInit, OnDestroy {
       .subscribe((postData: {posts: Post[], postCount: number}) => {
         this.isLoading = false;
         this.posts = postData.posts;
+        this.filteredPosts = this.posts;
         this.totalPosts = postData.postCount;
       });
     this.userIsAuthenticated = this.authService.getIsAuth();

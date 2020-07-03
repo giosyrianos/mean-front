@@ -16,6 +16,20 @@
   }
 }
 
+.skill-tags{
+  display: flex;
+  span{
+    margin: 0 4px;
+    font-weight: 900;
+    font-size: 1.1rem;
+  }
+  label{
+    font-weight: 400;
+    font-size: 1rem;
+    margin-right: 5px;
+  }
+}
+
 mat-accordion{
   padding: 1% 5%;
 }

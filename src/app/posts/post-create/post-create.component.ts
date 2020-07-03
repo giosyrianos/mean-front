@@ -1,12 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { Post } from '../post.model';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
-
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { PostService } from '../post.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import {MatAutocompleteSelectedEvent, MatAutocomplete} from '@angular/material/autocomplete';
 
+import {Observable} from 'rxjs';
 import { mimeType } from './mime-type.validator';
 import { AuthService } from 'src/app/auth/auth.service';
+import { startWith, map } from 'rxjs/operators';
+import { MatChipInputEvent } from '@angular/material/chips';
+
+
+export interface Skill {
+  name: string;
+}
 
 @Component({
   selector: 'app-post-create',
@@ -27,6 +35,17 @@ export class PostCreateComponent implements OnInit {
   category = '';
   subCategory = '';
 
+  // #### Chips ####
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  skillTags: string[] = ['CSS', 'HTML']
+
+
+
+  // ####   ####
   categories = ['Web Design', 'Web app', 'Application', 'Game'];
   subCategories = ['Design', 'Develop', 'SEO', 'Performance'];
 
@@ -37,7 +56,8 @@ export class PostCreateComponent implements OnInit {
     public postService: PostService,
     public authService: AuthService,
     public route: ActivatedRoute,
-  ) { }
+    
+  ) {}
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -69,8 +89,10 @@ export class PostCreateComponent implements OnInit {
             imgPath: postData.basicFields.imgPath,
             owner: postData.basicFields.ownerId,
             category: postData.basicFields.category,
-            subCategory: postData.basicFields.subCategory
+            subCategory: postData.basicFields.subCategory,
+            skillTags: postData.nonReqFields.recomendedTags
           };
+          this.skillTags = post.skillTags
           console.log(post);
           this.form.setValue({
             title: post.title,
@@ -120,7 +142,8 @@ export class PostCreateComponent implements OnInit {
         this.form.value.image,
         this.selectedCategory.value,
         this.selectedSubCategory.value,
-        this.ownerId
+        this.ownerId,
+        this.skillTags
       );
       this.form.reset();
     } else {
@@ -132,10 +155,36 @@ export class PostCreateComponent implements OnInit {
         this.form.value.image,
         this.selectedCategory.value,
         this.selectedSubCategory.value,
-        this.ownerId
+        this.ownerId,
+        this.skillTags
       );
     }
-    console.log('worked');
+    console.log(this.skillTags);
   }
 
+
+  // #### CHIPS FUNCTIONS ####
+
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.skillTags.push( input.value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  remove(skill: string): void {
+    const index = this.skillTags.indexOf(skill);
+
+    if (index >= 0) {
+      this.skillTags.splice(index, 1);
+    }
+  }
 }

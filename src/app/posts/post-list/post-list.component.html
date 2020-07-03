@@ -1,8 +1,16 @@
 <div class="list-container">
 
 <mat-spinner *ngIf="isLoading"></mat-spinner>
+<div>
+  <input type="text" class="form-control" placeholder="Search By category"
+  style="width: 300px;" [(ngModel)]="searchCatTerm" />
+</div>
+<!-- <div>
+  <input type="text" class="form-control" placeholder="Search By Tag"
+  style="width: 300px;" [(ngModel)]="searchTagTerm" />
+</div> -->
   <mat-accordion *ngIf="!isLoading && posts.length > 0"  multi="false">
-  <mat-expansion-panel *ngFor="let post of posts">
+  <mat-expansion-panel *ngFor="let post of filteredPosts">
     <mat-expansion-panel-header>
       {{ post.title }}
     </mat-expansion-panel-header>
@@ -34,6 +42,15 @@
           <span>10/6/2020 - 10/1/2021</span>
         </div>
       </div>
+    </div>
+    <div class= "skill-tags" *ngIf="post.rectags.length > 0">
+      <label >
+        Recommended skills: 
+      </label>
+      <span *ngFor="let skill of post.rectags">
+        {{skill}}
+      </span>
+
     </div>
     <div class="offers">
       <hr>
