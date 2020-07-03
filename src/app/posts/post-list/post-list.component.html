@@ -22,9 +22,15 @@
     <mat-expansion-panel-header>
       {{ post.title }}
     </mat-expansion-panel-header>
+    <span style="cursor: pointer;" [routerLink]="['/profile/' + post.owner]">
+      by
+      <mat-icon color="primary">person</mat-icon>
+    </span>
     <div class="post-img">
       <img [src]="post.imgPath" [alt]="post.imgPath">
     </div>
+    <div class="proj-info">
+
     <label style="text-decoration: underline;">Description: </label>
     <p>
       {{ post.content }}
@@ -60,6 +66,8 @@
       </span>
 
     </div>
+  </div>
+
     <div class="offers">
       <hr>
       <mat-card *ngFor="let bid of post.bids">
