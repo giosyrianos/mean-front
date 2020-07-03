@@ -11,11 +11,6 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { startWith, map } from 'rxjs/operators';
 import { MatChipInputEvent } from '@angular/material/chips';
 
-
-export interface Skill {
-  name: string;
-}
-
 @Component({
   selector: 'app-post-create',
   templateUrl: './post-create.component.html',
