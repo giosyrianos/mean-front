@@ -21,12 +21,14 @@ mat-card-header {
   }
 
   mat-card-subtitle {
-    font-size: 25px;
+    font-size: 1.1rem;
   }
 
   label {
-    color: #000;
-    font-weight: 900;
+    font-weight: 400;
+    font-size: 1rem;
+    margin-right: 5px;
+    color:#000;
   }
 }
 
@@ -110,6 +112,10 @@ p {
 .offers {
   margin-top: 10px;
 
+  mat-card {
+    width: 100%;
+  }
+
   mat-card-content {
     display: flex;
     justify-content: space-between;
@@ -132,5 +138,31 @@ p {
   .mat-raised-button.mat-primary{
     margin-right: 10px;
     background-color: green;
+  }
+
+   > mat-action-row form {
+    width: 100%;
+
+    mat-form-field {
+      width: 60%;
+    }
+  }
+}
+
+
+.skillset {
+  display: flex;
+
+
+  ul {
+    padding: 0;
+    margin-top: 0;
+    list-style: none;
+    display: flex;
+    li {
+      font-size: 1.1rem;
+      margin: 0px 4px;
+      color: gray
+    }
   }
 }

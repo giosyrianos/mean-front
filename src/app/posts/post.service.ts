@@ -23,7 +23,7 @@ export class PostService {
     this.http
       .get<{ message: string, posts: any, total: number }>('http://localhost:3000/api/posts' + queryParams)
       .pipe(
-        map((postData) => {
+        map((postData: any) => {
           return {
             posts: postData.posts.map(post => {
             return {
@@ -82,7 +82,7 @@ export class PostService {
     postData.append('ownerId', id);
     postData.append('category', category);
     postData.append('subCategory', subCategory);
-    postData.append('skillTags', skillTags)
+    postData.append('skillTags', skillTags);
     // Give to the property the same name the post function tries to find (line:31@ posts.js)
     postData.append('image', image, title);
     console.log(postData);
@@ -92,7 +92,15 @@ export class PostService {
       });
   }
 
-  updatePost(id: string, title: string, content: string, image: File | string, category: string, subCategory: string, ownerId:string, skillTags: any) {
+  updatePost(
+    id: string,
+    title: string,
+    content: string,
+    image: File | string,
+    category: string,
+    subCategory: string,
+    ownerId: string,
+    skillTags: any) {
     // var postData: Post | FormData;
     if (typeof image === 'object') {
       const postData = new FormData();
@@ -103,7 +111,7 @@ export class PostService {
       postData.append('category', category);
       postData.append('subCategory', subCategory);
       postData.append('owner', ownerId);
-      postData.append('skillTags', skillTags)
+      postData.append('skillTags', skillTags);
       this.http
       .put('http://localhost:3000/api/posts/' + id, postData)
       .subscribe(response => {
@@ -134,10 +142,10 @@ export class PostService {
       devId: userid,
       price
     };
-    console.log("data" ,bidData);
+    console.log('data' , bidData);
     this.http.post('http://localhost:3000/api/posts/bid', bidData)
       .subscribe(response => {
-        this.router.navigate(['/profile/'+ userID]);
+        this.router.navigate(['/profile/' + userID]);
       });
   }
 
@@ -150,7 +158,7 @@ export class PostService {
     console.log(data);
     this.http.put('http://localhost:3000/api/posts/bid/accept', data)
     .subscribe(response => {
-      console.log(response)
+      console.log(response);
       this.router.navigate(['/profile/' + userid]);
     });
   }
@@ -161,7 +169,7 @@ export class PostService {
       bidId: bidid,
       devId: devid
     };
-    console.log("data",data);
+    console.log('data', data);
     this.http.put('http://localhost:3000/api/posts/bid/decline', data)
     .subscribe(response => {
       this.router.navigate(['/profile/' + userid]);
@@ -171,46 +179,46 @@ export class PostService {
   addTask(postid: string, name: string, description: string, userid: string) {
     const data = {
       postId: postid,
-      name: name,
-      description: description
-    }
-    console.log("data", data)
+      name,
+      description
+    };
+    console.log('data', data);
     this.http.post('http://localhost:3000/api/posts/tasks', data)
     .subscribe(response => {
       this.router.navigate(['/profile/' + userid]);
     });
   }
 
-  completeTask(postid: string, taskid: string, userid: string){
-    const data ={
+  completeTask(postid: string, taskid: string, userid: string) {
+    const data = {
       postId: postid,
       taskId: taskid
-    }
+    };
     this.http.put('http://localhost:3000/api/posts/tasks/complete', data)
     .subscribe(response => {
-      this.router.navigate(['/profile/'+ userid]);
+      this.router.navigate(['/profile/' + userid]);
     });
   }
 
-  completePost(postId: string, userid: string){
+  completePost(postId: string, userid: string) {
     const data = {
-      postId: postId
-    }
+      postId
+    };
     this.http.put('http://localhost:3000/api/posts/set/complete', data)
     .subscribe(response => {
       this.router.navigate(['/profile/' + userid]);
     });
   }
 
-  commentDev(postId: string, rating: number, comment: string, clientId: string, devId:string){
-    console.log(postId)
+  commentDev(postId: string, rating: number, comment: string, clientId: string, devId: string) {
+    console.log(postId);
     const comm = {
       postId,
       rating,
       comment,
       clientId,
       devId
-    }
+    };
     this.http.post('http://localhost:3000/api/user/comment', comm)
     .subscribe(response => {
       this.router.navigate(['/profile/' + clientId]);
@@ -219,6 +227,6 @@ export class PostService {
 
 
   deletePost(postId: string) {
-    return this.http.delete(`http://localhost:3000/api/posts/${postId}`)
+    return this.http.delete(`http://localhost:3000/api/posts/${postId}`);
   }
 }

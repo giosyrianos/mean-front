@@ -104,8 +104,8 @@
           <input
             matInput formControlName="lastname" placeholder="First Name - Last Name">
         </mat-form-field>
-        <div class="container">
-          <h3>Skill Tags:</h3>
+        <div *ngIf="userType === 'Developer'" class="container">
+          <h3>Dev Skills:</h3>
           <mat-selection-list>
             <mat-list-option *ngFor="let skill of skillTags" (click) = "show(skill)">
               {{skill}}
