@@ -251,8 +251,13 @@ export class ClientComponent implements OnInit, OnDestroy {
   }
 
   onDelete(id: string) {
-    this.usrService.deleteUser(id);
+    this.postService.deletePost(id);
   }
+
+  onDeleteUser(id: string){
+    this.usrService.deleteUser(id)
+  }
+
 
   ngOnDestroy() {
     if (this.mySubscription) {
