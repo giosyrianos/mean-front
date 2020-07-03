@@ -9,7 +9,7 @@ import { map, retry } from 'rxjs/operators';
   providedIn: 'root'
 })
 
-export class UserService{
+export class UserService {
   private devs: any[] = [];
   private devsListUpdated = new Subject<{ devs: any[] }>();
   userId: string;
@@ -35,29 +35,29 @@ export class UserService{
   }
 
   getDevComments(id: string) {
-    return this.http.get(`http://localhost:3000/api/user/devs/comments/${id}`)
+    return this.http.get(`http://localhost:3000/api/user/devs/comments/${id}`);
   }
 
   getDevPosts(id: string) {
     return this.http.get(`http://localhost:3000/api/user/posts/${id}`);
   }
 
-  getUsers(){
-    return this.http.get('http://localhost:3000/api/user/')
+  getUsers() {
+    return this.http.get('http://localhost:3000/api/user/');
   }
 
-  deleteUser(userid: string){
-    console.log(userid)
-    return this.http.delete(`http://localhost:3000/api/user/deleteUser/${userid}`)
+  deleteUser(userid: string) {
+    console.log(userid);
+    return this.http.delete(`http://localhost:3000/api/user/deleteUser/${userid}`);
   }
 
-  updateUser(userID:string , newData: any) {
+  updateUser(userID: string , newData: any) {
     const userData = new FormData();
     userData.append('newUser', JSON.stringify(newData));
     userData.append('image', newData.image);
     this.http.put(`http://localhost:3000/api/user/${userID}`, userData)
     .subscribe(response => {
-      this.router.navigate(['/profile/'+ userID]);
+      this.router.navigate(['/profile/' + userID]);
     });
   }
 
