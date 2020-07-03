@@ -18,39 +18,8 @@ export class PostListComponent implements OnInit, OnDestroy {
   public posts: Post[] = [];
 
   public filteredPosts: Post[] = [];
+  // tslint:disable-next-line: variable-name
   private _searchCatTerm: string;
-  private _searchTagTerm: string;
-
-  // get searchTagTerm(): string{
-  //   return this._searchTagTerm
-  // }
-
-  // set searchTagTerm(value: string){
-  //   this._searchTagTerm = value
-  //   this.filteredPosts = this.filtereTagPosts(value)
-  // }
-
-  get searchCatTerm(): string{
-    return this._searchCatTerm
-  }
-
-  set searchCatTerm(value: string){
-    this._searchCatTerm = value
-    this.filteredPosts = this.filterePosts(value)
-  }
-
-  filterePosts(searchString: string) {
-    return this.posts.filter( post =>
-      post.category.toLowerCase().indexOf(searchString.toLowerCase()) !== -1)
-  }
-
-  // filtereTagPosts(searchString: string) {
-  //   return this.posts.filter( post =>{
-  //     for(var i in post.tags){
-  //       post.tags[i].toLowerCase().indexOf(searchString.toLowerCase()) !== -1
-  //     }
-  //   })
-  // }
 
   private postsSub: Subscription;
   private authStatusSup: Subscription;
@@ -64,8 +33,27 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   totalPosts = 0;
   currentPage = 1;
-  postsPerPage = 8;
+  postsPerPage = 10;
   pageSizeOptions = [1, 3, 8, 10];
+
+  // get searchTagTerm(): string{
+  //   return this._searchTagTerm
+  // }
+
+  // set searchTagTerm(value: string){
+  //   this._searchTagTerm = value
+  //   this.filteredPosts = this.filtereTagPosts(value)
+  // }
+
+
+  // filtereTagPosts(searchString: string) {
+  //   return this.posts.filter( post =>{
+  //     for(var i in post.tags){
+  //       post.tags[i].toLowerCase().indexOf(searchString.toLowerCase()) !== -1
+  //     }
+  //   })
+  // }
+
   constructor(
     public postService: PostService,
     private authService: AuthService
@@ -81,7 +69,7 @@ export class PostListComponent implements OnInit, OnDestroy {
     // this.posts = this.postService.getPosts();
     this.isLoading = true;
     this.userId = this.authService.getUserId();
-    this.userType = this.authService.getUserType()
+    this.userType = this.authService.getUserType();
     this.postService.getPosts(this.postsPerPage, this.currentPage);
     this.postsSub = this.postService.updatePostsListener()
       .subscribe((postData: {posts: Post[], postCount: number}) => {
@@ -99,13 +87,27 @@ export class PostListComponent implements OnInit, OnDestroy {
   }
 
 
+  get searchCatTerm(): string {
+    return this._searchCatTerm;
+  }
+
+  set searchCatTerm(value: string) {
+    this._searchCatTerm = value;
+    this.filteredPosts = this.filterePosts(value);
+  }
+
+  filterePosts(searchString: string) {
+    return this.posts.filter( post =>
+      post.category.toLowerCase().indexOf(searchString.toLowerCase()) !== -1);
+  }
+
   declineBid(postid: string, bidid: string, devid: string) {
-    this.userId = this.authService.getUserId()
+    this.userId = this.authService.getUserId();
     this.postService.declineBid(postid, bidid, devid, this.userId);
   }
 
   acceptBid(postid: string, bidid: string, devid: string) {
-    this.userId = this.authService.getUserId()
+    this.userId = this.authService.getUserId();
     this.postService.acceptBid(postid, bidid, devid, this.userId);
   }
 
@@ -115,13 +117,13 @@ export class PostListComponent implements OnInit, OnDestroy {
     }
     this.isLoading = true;
     if (!this.form.invalid) {
-      this.userId = this.authService.getUserId()
+      this.userId = this.authService.getUserId();
       this.postService.putBid(postid, this.userId, this.form.value.price, this.userId );
     }
   }
 
   isclient() {
-    if (this.authService.getUserType() == 'Client') {
+    if (this.authService.getUserType() === 'Client') {
       this.isClient = true;
     } else {
       return false;
