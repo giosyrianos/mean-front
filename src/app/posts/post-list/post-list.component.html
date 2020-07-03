@@ -1,13 +1,18 @@
 <div class="list-container">
 
 <mat-spinner *ngIf="isLoading"></mat-spinner>
-<div>
-      <mat-label>
-        Search for category
-      </mat-label>
-        <input  type="text" class="form-control" 
-        style="width: 300px;" [(ngModel)]="searchCatTerm" />
-</div>
+  <mat-form-field class="src-container">
+    <mat-label> Search projects category
+    </mat-label>
+    <input
+      matInput
+      type="text"
+      placeholder="search category"
+      class="form-control"
+      style="width: 300px;"
+      [(ngModel)]="searchCatTerm"
+    />
+  </mat-form-field>
 <!-- <div>
   <input type="text" class="form-control" placeholder="Search By Tag"
   style="width: 300px;" [(ngModel)]="searchTagTerm" />
@@ -48,7 +53,7 @@
     </div>
     <div class= "skill-tags" *ngIf="post.rectags.length > 0">
       <label >
-        Recommended skills: 
+        Recommended skills:
       </label>
       <span *ngFor="let skill of post.rectags">
         {{skill}}
