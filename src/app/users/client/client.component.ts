@@ -23,7 +23,7 @@ export class ClientComponent implements OnInit, OnDestroy {
   user: any;
   userType: string;
   public posts: any = [];
-  public devComments: any =[];
+  public devComments: any = [];
   isLoading = false;
   taskform: FormGroup;
   commentform: FormGroup;
@@ -61,7 +61,7 @@ export class ClientComponent implements OnInit, OnDestroy {
       comment: new FormControl(null, {
         validators: [Validators.required]
       })
-    })
+    });
     this.taskform = new FormGroup({
       name: new FormControl(null, {
         validators: [Validators.required]
@@ -85,10 +85,10 @@ export class ClientComponent implements OnInit, OnDestroy {
     });
   }
 
-  getComments(devId: string){
-    if(this.authService.getUserType() == 'Client'){
-      return
-    }else{
+  getComments(devId: string) {
+    if (this.authService.getUserType() === 'Client') {
+      return;
+    } else {
       this.usrService.getDevComments(devId)
         .pipe(
           map((commentsData: any) => {
@@ -111,7 +111,7 @@ export class ClientComponent implements OnInit, OnDestroy {
           comments: [...this.devComments],
         });
     }
-  )}
+  );}
 }
 
   commentDev(postId: string, devId: string) {
@@ -119,7 +119,7 @@ export class ClientComponent implements OnInit, OnDestroy {
       return;
     }
     if (!this.commentform.invalid) {
-      this.userId = this.authService.getUserId()
+      this.userId = this.authService.getUserId();
       this.postService.commentDev(postId, this.commentform.value.rating, this.commentform.value.comment, this.userId, devId );
     }
   }
@@ -131,20 +131,20 @@ export class ClientComponent implements OnInit, OnDestroy {
   updateCommentsListener() {
     return this.commentsListUpdated.asObservable();
   }
-  
-  addTask(postID: string){
+
+  addTask(postID: string) {
     if (this.taskform.invalid) {
       return;
     }
     if (!this.taskform.invalid) {
-      this.userId = this.authService.getUserId()
+      this.userId = this.authService.getUserId();
       this.postService.addTask(postID, this.taskform.value.name, this.taskform.value.description, this.userId );
     }
   }
 
-  completeTask(postId: string, taskId: string){
-    this.userId = this.authService.getUserId()
-    this.postService.completeTask(postId, taskId, this.userId)
+  completeTask(postId: string, taskId: string) {
+    this.userId = this.authService.getUserId();
+    this.postService.completeTask(postId, taskId, this.userId);
   }
 
   getUserData(userID: string) {
@@ -160,7 +160,7 @@ export class ClientComponent implements OnInit, OnDestroy {
   getProfilesPosts(userID: string) {
     this.isLoading = true;
     this.userType = this.authService.getUserType();
-    if (this.userType === 'Client') {
+    if (this.userType !== 'Developer' || this.userId !== userID) {
       this.usrService.getUsersPosts(userID)
         .pipe(
           map((postData: any) => {
@@ -196,7 +196,7 @@ export class ClientComponent implements OnInit, OnDestroy {
       this.usrService.getDevPosts(userID)
         .pipe(
           map((postData: any) => {
-            console.log(postData)
+            console.log(postData);
             return {
               posts: postData.data.map(post => {
                 return {
@@ -232,27 +232,32 @@ export class ClientComponent implements OnInit, OnDestroy {
     this.router.navigate([`/profile/${devId}`]);
   }
 
-  submitCompletition(postId: string){
-    console.log(postId)
-    this.userId = this.authService.getUserId()
+  submitCompletition(postId: string) {
+    console.log(postId);
+    this.userId = this.authService.getUserId();
     this.postService.completePost(postId, this.userId);
   }
 
-  declineBid(postid: string, bidid: string, devid: string){
-    this.userId = this.authService.getUserId()
-    this.postService.declineBid(postid, bidid, devid, this.userId)
+  declineBid(postid: string, bidid: string, devid: string) {
+    this.userId = this.authService.getUserId();
+    this.postService.declineBid(postid, bidid, devid, this.userId);
     // console.log(postid);
   }
 
-  acceptBid(postid: string, bidid: string, devid: string){
+  acceptBid(postid: string, bidid: string, devid: string) {
     // console.log(postid);
-    this.userId = this.authService.getUserId()
-    this.postService.acceptBid(postid, bidid, devid, this.userId)
+    this.userId = this.authService.getUserId();
+    this.postService.acceptBid(postid, bidid, devid, this.userId);
   }
 
   onDelete(id: string) {
+    this.postService.deletePost(id);
+  }
+
+  onDeleteUser(id: string){
     this.usrService.deleteUser(id)
   }
+
 
   ngOnDestroy() {
     if (this.mySubscription) {

@@ -18,8 +18,8 @@ export class SignupComponent implements OnInit, OnDestroy {
   secondFormGroup: FormGroup;
   isEditable = false;
   userType = '';
-  skills = []
-  skillTags: string [] = ['CSS', 'HTML', 'PYTHON', 'WEB-DESIGN', 'WEB-DEV', 'JAVASCRIPT', 'JAVA']
+  skills = [];
+  skillTags: string [] = ['CSS', 'HTML', 'PYTHON', 'WEB-DESIGN', 'WEB-DEV', 'JAVASCRIPT', 'JAVA'];
 
   selectedRole = new FormControl();
   imgPreview: string;
@@ -52,13 +52,13 @@ export class SignupComponent implements OnInit, OnDestroy {
     });
 
   }
-  show(skill){
-    if (this.skills.includes(skill)){
-      this.skills = this.skills.filter(function(skil){return skil != skill})
-    }else{
-      this.skills.push(skill)
+  show(skill) {
+    if (this.skills.includes(skill)) {
+      this.skills = this.skills.filter((skil) =>skil != skill);
+    } else {
+      this.skills.push(skill);
     }
-    console.log(this.skills)
+    console.log(this.skills);
   }
   getSelection() {
     this.userType = this.selectedRole.value;
@@ -93,7 +93,7 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   submitForm() {
     this.firstFormGroup.patchValue({ userType: this.userType });
-    this.secondFormGroup.patchValue({ selectedSkills: this.skills})
+    this.secondFormGroup.patchValue({ selectedSkills: this.skills});
       // console.log('first:', this.firstFormGroup.value);
       // console.log('second:', this.secondFormGroup.value);
     const newUserData = { ...this.firstFormGroup.value, ...this.secondFormGroup.value };

@@ -1,14 +1,36 @@
 <div class="list-container">
 
 <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <mat-form-field class="src-container">
+    <mat-label> Search projects category
+    </mat-label>
+    <input
+      matInput
+      type="text"
+      placeholder="search category"
+      class="form-control"
+      style="width: 300px;"
+      [(ngModel)]="searchCatTerm"
+    />
+  </mat-form-field>
+<!-- <div>
+  <input type="text" class="form-control" placeholder="Search By Tag"
+  style="width: 300px;" [(ngModel)]="searchTagTerm" />
+</div> -->
   <mat-accordion *ngIf="!isLoading && posts.length > 0"  multi="false">
-  <mat-expansion-panel *ngFor="let post of posts">
+  <mat-expansion-panel *ngFor="let post of filteredPosts">
     <mat-expansion-panel-header>
       {{ post.title }}
     </mat-expansion-panel-header>
+    <span style="cursor: pointer;" [routerLink]="['/profile/' + post.owner]">
+      by
+      <mat-icon color="primary">person</mat-icon>
+    </span>
     <div class="post-img">
       <img [src]="post.imgPath" [alt]="post.imgPath">
     </div>
+    <div class="proj-info">
+
     <label style="text-decoration: underline;">Description: </label>
     <p>
       {{ post.content }}
@@ -23,8 +45,8 @@
           <label>Subcategory: </label>
           <span>{{post.subCategory}}</span>
         </div>
-      </div>
-      <div class="col-2">
+      <!-- </div>
+      <div class="col-2"> -->
         <div class="payment">
           <label>Payment Method: </label>
           <span>Milestones</span>
@@ -35,8 +57,18 @@
         </div>
       </div>
     </div>
+    <div class= "skill-tags" *ngIf="post.rectags.length > 0">
+      <label >
+        Recommended skills:
+      </label>
+      <span *ngFor="let skill of post.rectags">
+        {{skill}}
+      </span>
+
+    </div>
+  </div>
+
     <div class="offers">
-      <hr>
       <mat-card *ngFor="let bid of post.bids">
         <mat-card-title> {{bid.username}}</mat-card-title>
         <mat-card-content>

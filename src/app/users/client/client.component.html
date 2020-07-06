@@ -11,7 +11,7 @@
         {{ user.userFields.username }}
         <mat-card-actions *ngIf="profileID === userId || userType == 'admin'">
           <a [routerLink]="'/profile/edit/' + userId" *ngIf="profileID === userId" color="primary" mat-raised-button>EDIT</a>
-          <button color="warn" mat-raised-button (click)='onDelete(user._id)'>DELETE</button>
+          <button color="warn" mat-raised-button (click)='onDeleteUser(user._id)'>DELETE</button>
         </mat-card-actions>
       </mat-card-title>
       <mat-card-subtitle>
@@ -19,11 +19,11 @@
         {{ user.subUserFields.name }} {{ user.subUserFields.surname }}
       </mat-card-subtitle>
       <mat-card-subtitle>
-        <label>email: </label>
+        <label>Email: </label>
         {{ user.userFields.email }}
       </mat-card-subtitle>
-      <mat-card-subtitle *ngIf="userType === 'Developer'">
-        Skills:
+      <mat-card-subtitle class="skillset" *ngIf="userType === 'Developer'">
+        <label>Skills: </label>
         <ul>
           <li *ngFor="let skill of user.skillTags">
             {{ skill }}
@@ -140,7 +140,10 @@
                 </mat-form-field>
                 <mat-error *ngIf="taskform.get('description').invalid">Please enter description</mat-error>
                 </form>
-              <button mat-raised-button color="primary" (click) = "addTask(post.id)" >Add Task</button>
+                <div>
+                  <button mat-raised-button color="primary" (click) = "addTask(post.id)" >Add Task</button>
+                </div>
+
             </mat-action-row>
           </div>
           <mat-action-row *ngIf="userIsAuthenticated && userId===profileID && userType =='Client'">

@@ -8,11 +8,35 @@
 }
 
 .post-img {
-  width: 100%;
+  width: 50%;
+  text-align: right;
+  float: right;
 
   img {
     box-shadow: 1px 1px 5px rgba(0, 0, 0 , 0.5);
     max-height: 500px;
+  }
+}
+
+label {
+  color: gray;
+}
+
+.proj-info {
+  width: 50%;
+}
+
+.skill-tags{
+  display: flex;
+  span{
+    margin: 0 4px;
+    font-weight: 900;
+    font-size: 1.1rem;
+  }
+  label{
+    font-weight: 400;
+    font-size: 1rem;
+    margin-right: 5px;
   }
 }
 
@@ -38,7 +62,7 @@ p {
   .col-1, .col-2 {
     display: flex;
     flex-direction: column;
-    width: 45%;
+    width: 75%;
 
     div {
       margin: 5px 0;
@@ -80,4 +104,9 @@ p {
     margin-right: 10px;
     background-color: green;
   }
+}
+
+.src-container {
+  width: 25%;
+  margin: 10px 0;
 }

@@ -30,7 +30,7 @@ export class AdminComponent implements OnInit {
     private userService: UserService,
     private route: ActivatedRoute,
     private router: Router
-  ) { 
+  ) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
       return false;
     };
@@ -40,7 +40,7 @@ export class AdminComponent implements OnInit {
         // Trick the Router into believing it's last link wasn't previously loaded
         this.router.navigated = false;
       }
-    });}
+    }); }
 
   ngOnInit() {
     this.isLoading = true;
@@ -56,40 +56,40 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  getUsers(){
+  getUsers() {
     this.userService.getUsers()
-    .pipe(
-      map((usersData: any) => {
-        console.log(usersData)
-        return {
-          users: usersData.users.map(user => {
-            return {
-              id: user._id,
-              username: user.username,
-              email: user.email,
-              userType: user.userType
-            };
-          }),
-        };
-      })
-    )
-    .subscribe(isUsers => {
-      this.isLoading = false;
-      console.log(isUsers, this.userType);
-      this.users = isUsers.users;
-      this.usersListUpdated.next({
-      users: [...this.users],
-    });
-}
-)
-        }
+      .pipe(
+        map((usersData: any) => {
+          console.log(usersData);
+          return {
+            users: usersData.users.map(user => {
+              return {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                userType: user.userType
+              };
+            }),
+          };
+        })
+      )
+      .subscribe(isUsers => {
+        this.isLoading = false;
+        console.log(isUsers, this.userType);
+        this.users = isUsers.users;
+        this.usersListUpdated.next({
+          users: [...this.users],
+        });
+      }
+    );
+  }
 
   updatePostsListener() {
     return this.usersListUpdated.asObservable();
   }
 
-  goToProfile(userId: string){
-    console.log(userId)
-    this.router.navigate([`/profile/${userId}`])
+  goToProfile(userId: string) {
+    console.log(userId);
+    this.router.navigate([`/profile/${userId}`]);
   }
 }
