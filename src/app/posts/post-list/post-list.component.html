@@ -45,8 +45,8 @@
           <label>Subcategory: </label>
           <span>{{post.subCategory}}</span>
         </div>
-      </div>
-      <div class="col-2">
+      <!-- </div>
+      <div class="col-2"> -->
         <div class="payment">
           <label>Payment Method: </label>
           <span>Milestones</span>
@@ -69,7 +69,6 @@
   </div>
 
     <div class="offers">
-      <hr>
       <mat-card *ngFor="let bid of post.bids">
         <mat-card-title> {{bid.username}}</mat-card-title>
         <mat-card-content>

@@ -18,6 +18,10 @@
   }
 }
 
+label {
+  color: gray;
+}
+
 .proj-info {
   width: 50%;
 }
@@ -58,7 +62,7 @@ p {
   .col-1, .col-2 {
     display: flex;
     flex-direction: column;
-    width: 45%;
+    width: 75%;
 
     div {
       margin: 5px 0;
